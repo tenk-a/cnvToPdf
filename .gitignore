@@ -1,0 +1,16 @@
+/libs_vc*
+bak
+*.bak
+sav
+*.sav
+obj
+*.obj
+exe
+*.exe
+*.pbk
+*.ilk
+*.err
+err.txt
+*.suo
+*.opensdf
+*.sdf
