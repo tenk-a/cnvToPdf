@@ -1,9 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
+    <Filter Include="app">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="misc">
+      <UniqueIdentifier>{ba737936-0ea8-4825-b2e8-996e2bcd7ea6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -11,15 +14,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app\cnvToPdf.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>app</Filter>
     </ClCompile>
     <ClCompile Include="app\stdafx.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="misc\ExArgv.c">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="app\jpgfileToPdf.cpp">
+      <Filter>app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app\stdafx.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\ExArgv.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="app\jpgFileToPdf.hpp">
+      <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
