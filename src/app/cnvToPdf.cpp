@@ -8,6 +8,7 @@
 #include <setjmp.h>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <hpdf.h>
 #include <misc/ExArgv.h>
 #include "JpgFileToPdf.hpp"
@@ -24,15 +25,43 @@ int main (int argc, char *argv[]) {
 	ExArgv_conv(&argc, &argv);
 
 	std::vector<std::string> jpgfiles;
-	std::string outname;
+	JpgFileToPdf		conv;
+	JpgFileToPdf::Opts	conv_opts;
+	std::string			outname;
+
 	jpgfiles.reserve(1000);
 	for (int i = 1; i < argc; ++i) {
 		char* p = argv[i];
 		if (*p == '-') {
-			switch (*++p) {
+			++p;
+			switch (*p++) {
 			case 'o':
-				if (*++p)
+				if (*p)
 					outname = p;
+				break;
+			case 't':
+				if (*p)
+					conv_opts.title = p;
+				break;
+			case 'a':
+				if (*p)
+					conv_opts.author = p;
+				break;
+			case 'r':
+				conv_opts.r2l = (*p != '-');
+				break;
+			case 'm':
+				/*	PAGE_LAYOUT_SINGLE			 = 0,
+					PAGE_LAYOUT_ONE_COLUMN		 = 1,
+					PAGE_LAYOUT_TWO_COLUMN_LEFT = 2,
+					PAGE_LAYOUT_TWO_COLUMN_RIGHT= 3,
+					PAGE_LAYOUT_TWO_PAGE_LEFT   = 4,
+					PAGE_LAYOUT_TWO_PAGE_RIGHT  = 5,
+				*/
+				if (conv_opts.setLayoutMode(strtoul(p, NULL, 10)) == false) {
+					printf("option %s : out of range", argv[i]);
+					return 1;
+				}
 				break;
 			default:
 				return usage();
@@ -41,10 +70,13 @@ int main (int argc, char *argv[]) {
 			jpgfiles.push_back(p);
 		}
 	}
+
 	if (jpgfiles.empty())
 		return 0;
 	if (outname.empty())
 		outname = "a.pdf";
-	JpgFileToPdf	jpgFileToPdf;
-	return jpgFileToPdf.run(jpgfiles, outname.c_str()) == false;
+
+	std::sort(jpgfiles.begin(), jpgfiles.end());
+
+	return conv.run(jpgfiles, outname.c_str(), conv_opts) == false;
 }
