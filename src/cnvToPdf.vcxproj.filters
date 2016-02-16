@@ -25,6 +25,9 @@
     <ClCompile Include="app\jpgfileToPdf.cpp">
       <Filter>app</Filter>
     </ClCompile>
+    <ClCompile Include="misc\fname.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app\stdafx.h">
@@ -35,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="app\jpgFileToPdf.hpp">
       <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="misc\fname.h">
+      <Filter>misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

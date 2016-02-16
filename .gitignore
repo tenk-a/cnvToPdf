@@ -14,3 +14,5 @@ err.txt
 *.suo
 *.opensdf
 *.sdf
+test_output
+output
