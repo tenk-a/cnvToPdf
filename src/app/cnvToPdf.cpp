@@ -23,7 +23,7 @@ public:
 	}
 
 	int usage() {
-		printf("jpg2pdf [-opts] jpgfile(s)...\n");
+		printf("jpg2pdf [-opts] jpgfile(s)...    // " __DATE__ " by tenk*\n");
 		printf(
 			"opts:\n"
 			"  -o  --output\"FILE.pdf\"    出力するpdfファイル名\n"
@@ -51,7 +51,7 @@ public:
 
 
 	int main(int argc, char *argv[]) {
-		if (argc < 1)
+		if (argc < 2)
 			return usage();
 
 		ExArgv_conv(&argc, &argv);
@@ -89,7 +89,7 @@ public:
 					else
 						titleAuthor_ = conv_opts_.title;
 				} else {
-					titleAuthor_ = conv_opts_.author + " - " + conv_opts_.title;
+					titleAuthor_ = "[" + conv_opts_.author + "] " + conv_opts_.title;
 				}
 			}
 			outname_ = dstdir_ + "/" + titleAuthor_ + ".pdf";
@@ -235,6 +235,7 @@ private:
 			char const* t = strchr(s+1, ']');
 			if (t) {
 				rAuthor.assign(s + 1, t);
+				++t;
 				while (*t == ' ')
 					++t;
 				rTitle.assign(t);

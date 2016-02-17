@@ -66,7 +66,7 @@ bool JpgFileToPdf::run(std::vector<std::string> const& jpgfiles, char const* out
 	HPDF_Outline root = NULL;
 	if (opts.outline) { 		// アウトラインつける場合
 		HPDF_SetPageMode(pdf, HPDF_PAGE_MODE_USE_OUTLINE);
-		root = HPDF_CreateOutline(pdf, NULL, "test", NULL);
+		root = HPDF_CreateOutline(pdf, NULL, "page", NULL);
 		HPDF_Outline_SetOpened(root, HPDF_FALSE);
 	}
 
