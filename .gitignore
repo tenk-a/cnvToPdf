@@ -1,4 +1,5 @@
-/libs_vc*
+/libs_vc/*
+!/libs_vc/bld_lib_bat/
 bak
 *.bak
 sav
