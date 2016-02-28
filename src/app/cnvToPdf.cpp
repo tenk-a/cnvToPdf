@@ -23,7 +23,7 @@ public:
     }
 
     int usage() {
-        printf("jpg2pdf [-opts] jpgfile(s)...    // " __DATE__ " by tenk*\n");
+        printf("jpg2pdf [-opts] jpgfile(s)...    // v0.1  " __DATE__ " by tenk*\n");
         printf(
             "opts:\n"
             "  -o  --output\"FILE.pdf\"    出力するpdfファイル名\n"

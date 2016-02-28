@@ -68,23 +68,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)exe\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\exe\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)exe\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\exe\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)exe\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\exe\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)exe\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)obj\$(DefaultPlatformToolset)_$(PlatformTarget)_$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\exe\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\vc$(PlatformToolsetVersion)_$(PlatformName)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -93,8 +93,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -102,7 +102,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformName)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -112,8 +112,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -121,7 +121,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformName)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,10 +132,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformName)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,10 +154,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
-      <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -165,24 +165,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformName)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="../README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="app\cnvToPdf.cpp" />
-    <ClCompile Include="app\jpgfileToPdf.cpp" />
-    <ClCompile Include="app\stdafx.cpp" />
-    <ClCompile Include="misc\ExArgv.c" />
-    <ClCompile Include="misc\fname.cpp" />
+    <ClCompile Include="..\src\app\cnvToPdf.cpp" />
+    <ClCompile Include="..\src\app\jpgfileToPdf.cpp" />
+    <ClCompile Include="..\src\app\stdafx.cpp" />
+    <ClCompile Include="..\src\misc\ExArgv.c" />
+    <ClCompile Include="..\src\misc\fname.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app\jpgFileToPdf.hpp" />
-    <ClInclude Include="app\stdafx.h" />
-    <ClInclude Include="misc\ExArgv.h" />
-    <ClInclude Include="misc\fname.h" />
+    <ClInclude Include="..\src\app\jpgFileToPdf.hpp" />
+    <ClInclude Include="..\src\app\stdafx.h" />
+    <ClInclude Include="..\src\misc\ExArgv.h" />
+    <ClInclude Include="..\src\misc\fname.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

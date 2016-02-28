@@ -13,34 +13,34 @@
     <Text Include="../README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="app\cnvToPdf.cpp">
+    <ClCompile Include="..\src\app\cnvToPdf.cpp">
       <Filter>app</Filter>
     </ClCompile>
-    <ClCompile Include="app\stdafx.cpp">
+    <ClCompile Include="..\src\app\jpgfileToPdf.cpp">
       <Filter>app</Filter>
     </ClCompile>
-    <ClCompile Include="misc\ExArgv.c">
+    <ClCompile Include="..\src\app\stdafx.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\misc\ExArgv.c">
       <Filter>misc</Filter>
     </ClCompile>
-    <ClCompile Include="app\jpgfileToPdf.cpp">
-      <Filter>app</Filter>
-    </ClCompile>
-    <ClCompile Include="misc\fname.cpp">
+    <ClCompile Include="..\src\misc\fname.cpp">
       <Filter>misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app\stdafx.h">
-      <Filter>app</Filter>
-    </ClInclude>
-    <ClInclude Include="misc\ExArgv.h">
+    <ClInclude Include="..\src\misc\ExArgv.h">
       <Filter>misc</Filter>
     </ClInclude>
-    <ClInclude Include="app\jpgFileToPdf.hpp">
+    <ClInclude Include="..\src\misc\fname.h">
+      <Filter>misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\app\jpgFileToPdf.hpp">
       <Filter>app</Filter>
     </ClInclude>
-    <ClInclude Include="misc\fname.h">
-      <Filter>misc</Filter>
+    <ClInclude Include="..\src\app\stdafx.h">
+      <Filter>app</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

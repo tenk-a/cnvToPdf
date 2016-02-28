@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnvToPdf", "src\cnvToPdf.vcxproj", "{3ABF4A58-A6CB-442C-B577-48B4C6EA144A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cnvToPdf", "cnvToPdf.vcxproj", "{3ABF4A58-A6CB-442C-B577-48B4C6EA144A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
