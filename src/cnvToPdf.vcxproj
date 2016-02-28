@@ -94,7 +94,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_inc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -102,7 +102,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_lib/$(PlatformTarget)_static_debug;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0/stage/$(PlatformTarget)/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -113,7 +113,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_inc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -121,7 +121,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_lib/$(PlatformTarget)_static_debug;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0/stage/$(PlatformTarget)/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_inc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
@@ -143,7 +143,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_lib/$(PlatformTarget)_static;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0/stage/$(PlatformTarget)/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -154,7 +154,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_inc;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./app;./misc;$(SolutionDir)/libs_vc/misc_inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ForcedIncludeFiles>$(ProjectDir)\app\stdafx.h</ForcedIncludeFiles>
@@ -165,7 +165,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/misc_lib/$(PlatformTarget)_static;$(SolutionDir)/libs_vc$(PlatformToolsetVersion)/boost_1_60_0/stage/$(PlatformTarget)/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/libs_vc/misc_lib/vc$(PlatformToolsetVersion)_$(PlatformTarget)_static_$(Configuration)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
