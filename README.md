@@ -1,4 +1,4 @@
-# cnvToPdf v0.1
+# cnvToPdf v0.1b
 
 複数 jpg 画像をpdf化
 
@@ -88,3 +88,10 @@ express版の場合は bld.bat 実行前に libs_config.bat を
 用いている。これは少なくとも vc11(2012)以降にはあるが、vc9(2008)以前には無いので
 それらでは macro.vsprops というのを追加し、その中で PlatformToolsetVersion を
 設定するようにしている。(vc10(2010)は手持ちにないので この変数あるか未確認)
+
+## 履歴
+2016/02/28 v0.1  公開
+2016/02/29 v0.1b  libharuのビルドで確認も兼ねて demo もビルドしていたが、
+その中の jpfont_demo.exe の実行でエラー終了してしまう。jpfont_demo.c 中のフォント名
+MS-Mincyo が原因で、全てMS-Minchoに置換すれば直るが、主目的でないので demo を
+ビルドしないようにバッチ修正.
