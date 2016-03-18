@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <assert.h>
 #include <misc/ExArgv.h>
-#include <misc/fname.h>
+#include <fks_fname.h>
 #include "JpgFileToPdf.hpp"
 
 
@@ -106,9 +106,9 @@ public:
         FnameCmp(bool digit) : digit_(digit) { }
         bool operator()(std::string const& l, std::string const& r) const {
             if (digit_)
-                return fks::fname_digit_cmp(l.c_str(), r.c_str(), unsigned(-1)) < 0;
+                return fks_fnameDigitCmp(l.c_str(), r.c_str()) < 0;
             else
-                return fks::fname_cmp(l.c_str(), r.c_str()) < 0;
+                return fks_fnameCmp(l.c_str(), r.c_str()) < 0;
         }
     private:
         bool digit_;
@@ -148,7 +148,7 @@ private:
                 outname_ = p;
             } else if (paramEquLong(p, "out-dir", p)) {
                 if (!*p) goto OPT_ERR;
-                fks::fname_delLastSep(p);
+                fks_fnameDelLastSep(p);
                 dstdir_ = p;
             } else if (para == "page-layout-single") {
                 conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_SINGLE;
@@ -171,7 +171,7 @@ private:
                 break;
             case 'd':
                 if (!*p) goto OPT_ERR;
-                fks::fname_delLastSep(p);
+                fks_fnameDelLastSep(p);
                 dstdir_ = p;
                 break;
             case 't':
@@ -255,11 +255,11 @@ private:
     }
 
     std::string getPathToDir(char const* src) {
-        char const* base = fks::fname_baseName(src);
+        char const* base = fks_fnameBaseName(src);
         if (src < base) {
             --base;
             std::string dirPath(src, base);
-            char const* dir = fks::fname_baseName(dirPath.c_str());
+            char const* dir = fks_fnameBaseName(dirPath.c_str());
             if (dir < base)
                 return std::string(dir, base);
         }

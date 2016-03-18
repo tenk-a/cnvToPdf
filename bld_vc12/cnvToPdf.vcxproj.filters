@@ -25,15 +25,9 @@
     <ClCompile Include="..\src\misc\ExArgv.c">
       <Filter>misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\misc\fname.cpp">
-      <Filter>misc</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\misc\ExArgv.h">
-      <Filter>misc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\misc\fname.h">
       <Filter>misc</Filter>
     </ClInclude>
     <ClInclude Include="..\src\app\jpgFileToPdf.hpp">

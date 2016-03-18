@@ -4,7 +4,7 @@ rem ==========================================================================
 rem user setting
 
 rem vc80,vc90,vc100,vc110,vc120,vc140  // 2005,2008,2010,2012,2013,2015
-set CcName=vc90
+set CcName=vc120
 
 rem (VC++ Express Edition: CcHasX64=0 CcNoRtStatic=1)
 set CcHasX64=1

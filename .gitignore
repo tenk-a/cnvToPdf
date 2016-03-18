@@ -4,6 +4,8 @@ bak
 *.bak
 sav
 *.sav
+old
+*.old
 obj
 *.obj
 exe
