@@ -94,7 +94,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../src;../src/misc;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -113,7 +113,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../src;../src/misc;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
@@ -132,7 +132,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../src;../src/misc;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
@@ -154,7 +154,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../src;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../src;../src/misc;../src/app;../libs_vc/misc_inc</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
       <ForcedIncludeFiles>$(ProjectDir)..\src\app\stdafx.h</ForcedIncludeFiles>
@@ -176,13 +176,13 @@
     <ClCompile Include="..\src\app\jpgfileToPdf.cpp" />
     <ClCompile Include="..\src\app\stdafx.cpp" />
     <ClCompile Include="..\src\misc\ExArgv.c" />
-    <ClCompile Include="..\src\misc\fname.cpp" />
+    <ClCompile Include="..\src\misc\fks_fname.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\app\jpgFileToPdf.hpp" />
     <ClInclude Include="..\src\app\stdafx.h" />
     <ClInclude Include="..\src\misc\ExArgv.h" />
-    <ClInclude Include="..\src\misc\fname.h" />
+    <ClInclude Include="..\src\misc\fks_fname.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

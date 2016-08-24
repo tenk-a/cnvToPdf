@@ -4,6 +4,8 @@ bak
 *.bak
 sav
 *.sav
+tmp
+*.tmp
 old
 *.old
 obj

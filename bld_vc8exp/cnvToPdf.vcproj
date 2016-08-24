@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../src;../src/app;../libs_vc/misc_inc"
+				AdditionalIncludeDirectories="../src;../src/misc;../src/app;../libs_vc/misc_inc"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -121,7 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../src;../src/app;../libs_vc/misc_inc"
+				AdditionalIncludeDirectories="../src;../src/misc;../src/app;../libs_vc/misc_inc"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -217,11 +217,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\misc\fname.cpp"
+				RelativePath="..\src\misc\fks_fname.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\src\misc\fname.h"
+				RelativePath="..\src\misc\fks_fname.h"
 				>
 			</File>
 		</Filter>

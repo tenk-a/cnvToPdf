@@ -25,6 +25,9 @@
     <ClCompile Include="..\src\misc\ExArgv.c">
       <Filter>misc</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\misc\fks_fname.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\misc\ExArgv.h">
@@ -35,6 +38,9 @@
     </ClInclude>
     <ClInclude Include="..\src\app\stdafx.h">
       <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\misc\fks_fname.h">
+      <Filter>misc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
