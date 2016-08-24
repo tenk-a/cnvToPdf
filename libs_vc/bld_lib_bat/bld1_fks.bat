@@ -9,23 +9,21 @@ rem This batch-file license: boost software license version 1.0
 setlocal
 
 set ToolSet=
-set Arch=
 set Platform=
-rem set LibDir=
-rem set StrPrefix=
-rem set StrRel=_release
-rem set StrDbg=_debug
-rem set StrRtSta=_static
-rem set StrRtDll=_rtdll
-
+set Arch=
 rem set Arch=%CcArch%
-rem set LibDir=%CcLibDir%
-set LibDir=
+set LibDir=%CcLibDir%
 set StrPrefix=%CcLibPrefix%
 set StrRel=%CcLibStrRelease%
 set StrDbg=%CcLibStrDebug%
 set StrRtSta=%CcLibStrStatic%
 set StrRtDll=%CcLibStrRtDll%
+
+if "%LibDir%"==""   set LibDir=lib
+if "%StrRel%"==""   set StrRel=_release
+if "%StrDbg%"==""   set StrDbg=_debug
+if "%StrRtSta%"=="" set StrRtSta=_static
+if "%StrRtDll%"=="" set StrRtDll=
 
 set LibCopyDir=
 set HasRel=
@@ -102,7 +100,6 @@ if "%HasRel%%HasDbg%"=="" (
 if "%StrRel%%StrDbg%"==""     set StrDbg=_debug
 if "%StrRtSta%%StrRtDll%"=="" set StrRtSta=_static
 
-if "%LibDir%"=="" set LibDir=lib_no_fkstd
 rem if not exist %LibDir% mkdir %LibDir%
 
 if "%HasRtSta%%HasRel%"=="Sr" call :Bld1 rtsta rel %StrPrefix%%Platform%%StrRtSta%%StrRel%
@@ -119,7 +116,7 @@ set RtType=%1
 set BldType=%2
 set Target=%3
 
-set "cflags=-c -W3 -D_CRT_SECURE_NO_WARNINGS -wd4996 -I. -Ifks -Iimpl -Iimpl/fks_impl -Iimpl/fkstd_impl -Iimpl/fks_impl/mswin -Iimpl/fkstd_impl/mswin"
+set "cflags=-c -TP -W3 -D_CRT_SECURE_NO_WARNINGS -wd4996 -I. -Ifks -Iimpl -Iimpl/impl_fks -Iimpl/impl_fks_mswin"
 set cflags=-DFKS_NO_FKSTD %cflags%
 set "conlflags=/INCREMENTAL:NO /NOLOGO -subsystem:console,5.01"
 set "conlibs=kernel32.lib advapi32.lib"
@@ -140,7 +137,8 @@ if "%BldType%"=="dbg" (
 
 rem pushd ..
 
-set BldDir=bld
+rem set BldDir=bld
+set BldDir=.
 if not exist %BldDir% mkdir %BldDir%
 set WkDir=%BldDir%\obj\%Target%
 if not exist %BldDir%\obj mkdir %BldDir%\obj
@@ -155,8 +153,10 @@ rem goto SKIP_MAKE_LIB
 
 rem [COMPILE]
 del %WkDir%\*.obj
-for /R impl\fks_impl   %%i in (*.c *.cpp) do call :Compile1 %%i %WkDir%\%%~ni.obj
-rem for /R impl\fkstd_impl %%i in (*.c *.cpp) do call :Compile1 %%i %WkDir%\%%~ni.obj
+for /R impl\impl_fks         %%i in (*.c *.cpp) do call :Compile1 %%i %WkDir%\%%~ni.obj
+for /R impl\impl_fks_mswin   %%i in (*.c *.cpp) do call :Compile1 %%i %WkDir%\%%~ni.obj
+rem for /R impl\impl_fkstd       %%i in (*.c *.cpp) do call :Compile1 %%i %WkDir%\%%~ni.obj
+rem for /R impl\impl_fkstd_mswin %%i in (*.c *.cpp) do call :Compile1 %%i %WkDir%\%%~ni.obj
 
 rem [MAKE LIBRARY]
 set TmpObjsFile=%WkDir%\tmp_%Target%_lnk.lst
@@ -171,15 +171,15 @@ rem [TEST]
 set TstWkDir=%BldDir%\obj\tst_%Target%
 if not exist %TstWkDir% mkdir %TstWkDir%
 
-set TstExeDir=%BldDir%\tst_exe
+set TstExeDir=%BldDir%\test_exe
 if not exist %TstExeDir% mkdir %TstExeDir%
 
 set cflags=%cflags% -DFKS_USE_TEST
-for /R test\test_fks %%i in (*.c *.cpp) do call :Compile1 %%i %TstWkDir%\%%~ni.obj
-set TstObjsFile=%TstWkDir%\test_%Target%_lnk.lst
+for /R test %%i in (*.c *.cpp) do call :Compile1 %%i %TstWkDir%\%%~ni.obj
+set TstObjsFile=%TstWkDir%\test_fkstd_%Target%_lnk.lst
 del %TstObjsFile%
 for /R %TstWkDir% %%i in (*.obj) do echo %%i | sort >>%TstObjsFile%
-cl -Fe%TstExeDir%\test_%Target%.exe @%TstObjsFile% %TgtLibDir%\fks.lib
+cl -Fe%TstExeDir%\test_fkstd_%Target%.exe @%TstObjsFile% %TgtLibDir%\fkstd.lib
 :SKIP_TEST
 
 if "%LibCopyDir%"=="" goto ENDIF_LibCopyDir
