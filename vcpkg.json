@@ -1,0 +1,8 @@
+{
+  "name": "cnvtopdf",
+  "version": "1.0.0",
+  "builtin-baseline": "861c33057553ee836e7061ffbdabc25ea343145d",
+  "dependencies": [
+    "libharu"
+  ]
+}

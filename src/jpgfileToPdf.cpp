@@ -23,7 +23,7 @@
 namespace {
     static jmp_buf  s_jmp_buf_env;
 
-    /** ƒGƒ‰[ƒnƒ“ƒhƒ‰[
+    /** ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
      */
     static void CALLBACK_DECL errorHandlerForHaru(HPDF_STATUS   error_no, HPDF_STATUS   detail_no, void *user_data) {
         printf("ERROR: error_no=%04X, detail_no=%u\n", (HPDF_UINT)error_no, (HPDF_UINT)detail_no);
@@ -31,7 +31,7 @@ namespace {
     }
 }
 
-/** ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+/** ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
  */
 JpgFileToPdf::JpgFileToPdf()
     : page_count_(1)
@@ -40,7 +40,7 @@ JpgFileToPdf::JpgFileToPdf()
 
 }
 
-/** jpg‰æ‘œ‚ğ“Ç‚İ‚ñ‚Å‚ğpdfƒtƒ@ƒCƒ‹‚É•ÏŠ·
+/** jpgç”»åƒã‚’èª­ã¿è¾¼ã‚“ã§ã‚’pdfãƒ•ã‚¡ã‚¤ãƒ«ã«å¤‰æ›
  */
 bool JpgFileToPdf::run(std::vector<std::string> const& jpgfiles, char const* outname, JpgFileToPdf::Opts const& opts) {
     HPDF_Doc    pdf = HPDF_New (errorHandlerForHaru, NULL);
@@ -53,43 +53,43 @@ bool JpgFileToPdf::run(std::vector<std::string> const& jpgfiles, char const* out
         return false;
     }
 
-    HPDF_SetCompressionMode (pdf, HPDF_COMP_ALL);   // ˆ³kƒ‚[ƒh
+    HPDF_SetCompressionMode (pdf, HPDF_COMP_ALL);   // åœ§ç¸®ãƒ¢ãƒ¼ãƒ‰
 
     is_jap_ = opts.jap || hasOver0x80(opts.title.c_str()) || hasOver0x80(opts.author.c_str());
-    if (is_jap_) {      // “ú–{Œêˆµ‚¤ê‡
+    if (is_jap_) {      // æ—¥æœ¬èªæ‰±ã†å ´åˆ
         HPDF_UseJPEncodings(pdf);
         HPDF_UseJPFonts(pdf);
-        HPDF_SetCurrentEncoder(pdf, "90msp-RKSJ-H");    // ƒJƒŒƒ“ƒg‚ÌƒGƒ“ƒR[ƒ_İ’è‚µ‚È‚¢‚Æ’˜Ò–¼‚Æ‚©ƒ^ƒCƒgƒ‹‚Æ‚©•¶š‰»‚¯‚·‚é
+        HPDF_SetCurrentEncoder(pdf, "90msp-RKSJ-H");    // ã‚«ãƒ¬ãƒ³ãƒˆã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€è¨­å®šã—ãªã„ã¨è‘—è€…åã¨ã‹ã‚¿ã‚¤ãƒˆãƒ«ã¨ã‹æ–‡å­—åŒ–ã‘ã™ã‚‹
     }
 
     HPDF_Outline root = NULL;
-    if (opts.outline) {         // ƒAƒEƒgƒ‰ƒCƒ“‚Â‚¯‚éê‡
+    if (opts.outline) {         // ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ã¤ã‘ã‚‹å ´åˆ
         HPDF_SetPageMode(pdf, HPDF_PAGE_MODE_USE_OUTLINE);
         root = HPDF_CreateOutline(pdf, NULL, "page", NULL);
         HPDF_Outline_SetOpened(root, HPDF_FALSE);
     }
 
-    HPDF_SetPageLayout(pdf, opts.layout_mode);      // Œ©ŠJ‚«‚Æ‚©’P•Å‚Æ‚©‚ÌpdfŠJ‚¢‚½‚Ìó‘Ôİ’è
+    HPDF_SetPageLayout(pdf, opts.layout_mode);      // è¦‹é–‹ãã¨ã‹å˜é ã¨ã‹ã®pdfé–‹ã„ãŸæ™‚ã®çŠ¶æ…‹è¨­å®š
 
     if (opts.r2l)
-        addR2L(pdf);            // ‰E’Ô‚¶‚É‚·‚éê‡
+        addR2L(pdf);            // å³ç¶´ã˜ã«ã™ã‚‹å ´åˆ
 
-    if (!opts.author.empty())   // ’˜Ò–¼İ’è
+    if (!opts.author.empty())   // è‘—è€…åè¨­å®š
         HPDF_SetInfoAttr(pdf, HPDF_INFO_AUTHOR, opts.author.c_str());
 
-    if (!opts.title.empty())    // ƒ^ƒCƒgƒ‹İ’è
+    if (!opts.title.empty())    // ã‚¿ã‚¤ãƒˆãƒ«è¨­å®š
         HPDF_SetInfoAttr(pdf, HPDF_INFO_TITLE, opts.title.c_str());
 
     for (size_t i = 0; i < jpgfiles.size(); ++i)
-        addJpgPage(pdf, jpgfiles[i].c_str(), root); // jpg ƒtƒ@ƒCƒ‹‚ğƒy[ƒW‰»
+        addJpgPage(pdf, jpgfiles[i].c_str(), root); // jpg ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒšãƒ¼ã‚¸åŒ–
 
-    HPDF_SaveToFile (pdf, outname);     // pdfƒtƒ@ƒCƒ‹‘‚«o‚µ
-    HPDF_Free(pdf);                     // ì‹ÆI—¹
+    HPDF_SaveToFile (pdf, outname);     // pdfãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãå‡ºã—
+    HPDF_Free(pdf);                     // ä½œæ¥­çµ‚äº†
     return 0;
 }
 
 
-/** ‰E’Ô‚¶İ’è
+/** å³ç¶´ã˜è¨­å®š
  */
 HPDF_STATUS JpgFileToPdf::addR2L(HPDF_Doc pdf) {
     HPDF_Catalog    catalog     = pdf->catalog;
@@ -110,7 +110,7 @@ HPDF_STATUS JpgFileToPdf::addR2L(HPDF_Doc pdf) {
 }
 
 
-/** jpgƒtƒ@ƒCƒ‹‚ğ•Å‰»
+/** jpgãƒ•ã‚¡ã‚¤ãƒ«ã‚’é åŒ–
  */
 bool JpgFileToPdf::addJpgPage(HPDF_Doc pdf, char const* jpgname, HPDF_Outline root) {
     HPDF_Page   page = HPDF_AddPage (pdf);
@@ -133,7 +133,7 @@ bool JpgFileToPdf::addJpgPage(HPDF_Doc pdf, char const* jpgname, HPDF_Outline ro
             if (font)
                 HPDF_Page_SetFontAndSize(page, font, 9);
         }
-        char str[130];  // •¶š—ñ‰»‚µ‚½int®”•ª‚É‚Í\•ª‚ÈƒTƒCƒY‚ğw’è.
+        char str[130];  // æ–‡å­—åˆ—åŒ–ã—ãŸintæ•´æ•°åˆ†ã«ã¯ååˆ†ãªã‚µã‚¤ã‚ºã‚’æŒ‡å®š.
         sprintf(str, "%d", (int)page_count_);
         HPDF_Outline     outline = HPDF_CreateOutline (pdf, root, str, NULL);
         HPDF_Destination dst = HPDF_Page_CreateDestination (page);
@@ -145,7 +145,7 @@ bool JpgFileToPdf::addJpgPage(HPDF_Doc pdf, char const* jpgname, HPDF_Outline ro
     return true;
 }
 
-/** •¶š—ñ‚É 0x80ˆÈã‚ÌƒR[ƒh‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©”Û‚©
+/** æ–‡å­—åˆ—ã« 0x80ä»¥ä¸Šã®ã‚³ãƒ¼ãƒ‰ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹å¦ã‹
  */
 bool JpgFileToPdf::hasOver0x80(char const* src) {
     signed char const* s = (signed char const*)src;

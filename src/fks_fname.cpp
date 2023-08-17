@@ -1,29 +1,31 @@
 /**
  *  @file   fks_fname.cpp
- *  @brief  ƒtƒ@ƒCƒ‹–¼‚Ìˆ—.
+ *  @brief  ãƒ•ã‚¡ã‚¤ãƒ«åã®å‡¦ç†.
  *  @author Masashi Kitamura
  *  @note
- *  -   c/c++ —p.
- *  -   ara_lib ‚É“ü‚ê‚é‚ÉÛ‚µAŠg’£q‚ğ .cpp ‚É‚µ‚Ä‚¢‚é‚ª “à—e‚Í .c‚Ì”ÍˆÍ.
- *  -   win / linux(unix) —p.
- *      win‚Å‚Í\ /‚ªAˆÈŠO‚Í/‚ªƒZƒpƒŒ[ƒ^.
- *      ˆê‰dos”»’è‚µ‚Ä‚¢‚é‚ªAint=2byte‚ğl—¶‚µ‚Ä‚¢‚È‚¢‚Ì‚Å’ˆÓ.
- *  -   •¶š‚Ì0x80–¢–‚ÍasciiŒn‚Å‚ ‚é‚±‚Æ‘O’ñ.
- *  -   SJIS“™‚Ìƒ}ƒ‹ƒ`ƒoƒCƒg•¶š‘Î‰.
- *      - WinŠÂ‹«‚Å‚Íƒ}ƒ‹ƒ`ƒoƒCƒg•¶š‚ÍCharNext‚Åƒ|ƒCƒ“ƒ^‚ği‚ß‚Ä‚¢‚é.
- *        (CharNext‚ªUTF8‘Î‰‚µ‚Ä‚à‚¢‚¢‚æ‚¤‚É.Å‚àwin©‘Ì‚ªŒ»óMBC‚ÍDBC‚Ì‚İ
- *        ‚Åutf8‘Î‰‚µ‚Ä‚¢‚È‚¢)
- *      - WinˆÈŠO‚ÌŠÂ‹«‚Å‚ÍAŠÂ‹«•Ï”LANG‚ğ‚İ‚Ä, SJIS,BIG5,GBK‚ğl—¶.
- *        (‚¨‚»‚ç‚­‘SŠp2ƒoƒCƒg–Ú‚É0x5c‚ª‚ ‚é‚Ì‚ÍA‚±‚ê‚­‚ç‚¢?‚Æ‘z’è)
- *      - ”äŠrŠÖŒW‚ÍAƒƒP[ƒ‹‘Î‰•s\•ª‚É‚Â‚«Œë”»’è‚ ‚è‚¦‚é?
- *  -   path‚ÌÅ‘å’·‚ğl—¶‚µ‚ÄAsize_t ‚Å‚È‚­ unsigned ‚ÅƒTƒCƒYw’è.
+ *  -   c/c++ ç”¨.
+ *  -   ara_lib ã«å…¥ã‚Œã‚‹ã«éš›ã—ã€æ‹¡å¼µå­ã‚’ .cpp ã«ã—ã¦ã„ã‚‹ãŒ å†…å®¹ã¯ .cã®ç¯„å›².
+ *  -   win / linux(unix) ç”¨.
+ *      winã§ã¯\ /ãŒã€ä»¥å¤–ã¯/ãŒã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿.
+ *      ä¸€å¿œdosåˆ¤å®šã—ã¦ã„ã‚‹ãŒã€int=2byteã‚’è€ƒæ…®ã—ã¦ã„ãªã„ã®ã§æ³¨æ„.
+ *  -   æ–‡å­—ã®0x80æœªæº€ã¯asciiç³»ã§ã‚ã‚‹ã“ã¨å‰æ.
+ *  -   SJISç­‰ã®ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—å¯¾å¿œ.
+ *      - Winç’°å¢ƒã§ã¯ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—ã¯CharNextã§ãƒã‚¤ãƒ³ã‚¿ã‚’é€²ã‚ã¦ã„ã‚‹.
+ *        (CharNextãŒUTF8å¯¾å¿œã—ã¦ã‚‚ã„ã„ã‚ˆã†ã«.æœ€ã‚‚winè‡ªä½“ãŒç¾çŠ¶MBCã¯DBCã®ã¿
+ *        ã§utf8å¯¾å¿œã—ã¦ã„ãªã„)
+ *      - Winä»¥å¤–ã®ç’°å¢ƒã§ã¯ã€ç’°å¢ƒå¤‰æ•°LANGã‚’ã¿ã¦, SJIS,BIG5,GBKã‚’è€ƒæ…®.
+ *        (ãŠãã‚‰ãå…¨è§’2ãƒã‚¤ãƒˆç›®ã«0x5cãŒã‚ã‚‹ã®ã¯ã€ã“ã‚Œãã‚‰ã„?ã¨æƒ³å®š)
+ *      - æ¯”è¼ƒé–¢ä¿‚ã¯ã€ãƒ­ã‚±ãƒ¼ãƒ«å¯¾å¿œä¸ååˆ†ã«ã¤ãèª¤åˆ¤å®šã‚ã‚Šãˆã‚‹?
+ *  -   pathã®æœ€å¤§é•·ã‚’è€ƒæ…®ã—ã¦ã€size_t ã§ãªã unsigned ã§ã‚µã‚¤ã‚ºæŒ‡å®š.
  */
 
 #include "fks_fname.h"
 
 #ifdef __cplusplus
+#include <cstddef>
 #include <cstdlib>
 #include <cstring>
+using namespace std;
 #else
 #include <stdlib.h>
 #include <string.h>
@@ -41,13 +43,13 @@
 #undef FKS_W32_NS
 #define FKS_W32_NS
 
-// os ‚Ìˆá‚¢ŠÖŒW.
+// os ã®é•ã„é–¢ä¿‚.
 #if defined _WIN32
  //#include "../win/ara_w32.h"
  #include <windows.h>
  #include <malloc.h>
  #if defined _MSC_VER
-  #pragma comment(lib, "User32.lib")            // CharNext()‚Å•K—v...
+  #pragma comment(lib, "User32.lib")            // CharNext()ã§å¿…è¦...
  #endif
 #else   // linux
  #include <alloca.h>
@@ -55,30 +57,30 @@
  // #include <sys/stat.h>
 #endif
 
-// fullpath ‰»‚Åalloca‚ğg‚í‚È‚¢ê‡’è‹`.
+// fullpath åŒ–ã§allocaã‚’ä½¿ã‚ãªã„å ´åˆå®šç¾©.
 //#define FKS_USE_FNAME_ALLOCA
 
-// unicode‘Î‰. ¦ mbŒn‚ğg‚í‚ê‚½‚­‚È‚¢‚½‚ß tchar.h ‚ğg‚í‚¸©‘O‚Å‘Îˆ.
-#ifdef FKS_FNAME_WCS_COMPILE    // wchar_t ‘Î‰.
+// unicodeå¯¾å¿œ. â€» mbç³»ã‚’ä½¿ã‚ã‚ŒãŸããªã„ãŸã‚ tchar.h ã‚’ä½¿ã‚ãšè‡ªå‰ã§å¯¾å‡¦.
+#ifdef FKS_FNAME_WCS_COMPILE    // wchar_t å¯¾å¿œ.
  #define FKS_FNAME_C(x)             L##x
  #define FKS_FNAME_CHAR             wchar_t
  #define FKS_FNAME_R_STR(s,c)       FKS_STD wcsrchr((s),(c))
- #if defined FKS_FNAME_WINDOS       // ‘å¬•¶š“¯ˆê‹.
+ #if defined FKS_FNAME_WINDOS       // å¤§å°æ–‡å­—åŒä¸€è¦–.
   #define FKS_FNAME_CMP(l,r)        _wcsicmp((l),(r))
   #define FKS_FNAME_N_CMP(l,r,n)    _wcsnicmp((l),(r),(n))
- #else                              // ‘å¬‹æ•Ê.
+ #else                              // å¤§å°åŒºåˆ¥.
   #define FKS_FNAME_CMP(l,r)        FKS_STD wcscmp((l),(r))
   #define FKS_FNAME_N_CMP(l,r,n)    FKS_STD wcsncmp((l),(r),(n))
  #endif
   #define FKS_FNAME_STRTOL(s,t,r)   FKS_STD wcstol((s),(t),(r))
-#else           // char ƒx[ƒX.
+#else           // char ãƒ™ãƒ¼ã‚¹.
  #define FKS_FNAME_C(x)             x
  #define FKS_FNAME_CHAR             char
  #define FKS_FNAME_R_STR(s,c)       FKS_STD strrchr((s),(c))
- #if defined FKS_FNAME_WINDOS       // ‘å¬•¶š“¯ˆê‹.
+ #if defined FKS_FNAME_WINDOS       // å¤§å°æ–‡å­—åŒä¸€è¦–.
   #define FKS_FNAME_CMP(l,r)        _stricmp((l),(r))
   #define FKS_FNAME_N_CMP(l,r,n)    _strnicmp((l),(r),(n))
- #else                              // ‘å¬‹æ•Ê.
+ #else                              // å¤§å°åŒºåˆ¥.
   #define FKS_FNAME_CMP(l,r)        FKS_STD strcmp((l),(r))
   #define FKS_FNAME_N_CMP(l,r,n)    FKS_STD strncmp((l),(r),(n))
  #endif
@@ -86,18 +88,18 @@
 #endif
 #define FKS_FNAME_IS_DIGIT(c)       (('0') <= (c) && (c) <= ('9'))
 
-// c/c++ ‘Îô.
-#ifdef __cplusplus                  // c++‚Ìê‡Aƒ|ƒCƒ“ƒ^‘€ì‚Ì‚İ‚ÌŠÖ”‚Íconst”Å,”ñconst”Å‚ğ‚Â‚­‚é.
- #define FKS_FNAME_const_CHAR       FKS_FNAME_CHAR      // ‚»‚Ì‚½‚ßAŠî–{‚ÍA”ñconstŠÖ”‚É‚·‚é.
-#else                               // c‚Ìê‡‚Í•W€ƒ‰ƒCƒuƒ‰ƒŠ‚É‚ ‚í‚¹ ˆø”const‚Å–ß‚è’l ”ñconst ‚É‚·‚é.
+// c/c++ å¯¾ç­–.
+#ifdef __cplusplus                  // c++ã®å ´åˆã€ãƒã‚¤ãƒ³ã‚¿æ“ä½œã®ã¿ã®é–¢æ•°ã¯constç‰ˆ,éconstç‰ˆã‚’ã¤ãã‚‹.
+ #define FKS_FNAME_const_CHAR       FKS_FNAME_CHAR      // ãã®ãŸã‚ã€åŸºæœ¬ã¯ã€éconsté–¢æ•°ã«ã™ã‚‹.
+#else                               // cã®å ´åˆã¯æ¨™æº–ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«ã‚ã‚ã› å¼•æ•°constã§æˆ»ã‚Šå€¤ éconst ã«ã™ã‚‹.
  #define FKS_FNAME_const_CHAR       const FKS_FNAME_CHAR
 #endif
 
 
 // ============================================================================
-// ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š‚Ì0x5c ‘ÎôŠÖŒW.
+// ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—ã®0x5c å¯¾ç­–é–¢ä¿‚.
 
-/// •¶š C ‚ª MS‘SŠp‚Ì‚PƒoƒCƒg–Ú‚©”Û‚©. (utf8‚âeuc‚Í \ –â‘è‚Í–³‚¢‚Ì‚Å 0‚ª‹A‚ê‚Îok)
+/// æ–‡å­— C ãŒ MSå…¨è§’ã®ï¼‘ãƒã‚¤ãƒˆç›®ã‹å¦ã‹. (utf8ã‚„eucã¯ \ å•é¡Œã¯ç„¡ã„ã®ã§ 0ãŒå¸°ã‚Œã°ok)
 #if defined FKS_FNAME_WCS_COMPILE
  #define FKS_FNAME_ISMBBLEAD(c)     (0)
 #elif defined _WIN32
@@ -110,7 +112,7 @@
  #define FKS_FNAME_ISMBBLEAD(c)     (0)
 #endif
 
-/// Ÿ‚Ì•¶š‚Öƒ|ƒCƒ“ƒ^‚ği‚ß‚é. ¦CharNext()‚ªƒTƒƒQ[ƒgƒyƒA‚âutf8‘Î‰‚µ‚Ä‚­‚ê‚Ä‚½‚ç‚¢‚¢‚È‚ÆŠú‘Ò(‘Ê–Ú‚©‚à‚¾‚¯‚Ç)
+/// æ¬¡ã®æ–‡å­—ã¸ãƒã‚¤ãƒ³ã‚¿ã‚’é€²ã‚ã‚‹. â€»CharNext()ãŒã‚µãƒ­ã‚²ãƒ¼ãƒˆãƒšã‚¢ã‚„utf8å¯¾å¿œã—ã¦ãã‚Œã¦ãŸã‚‰ã„ã„ãªã¨æœŸå¾…(é§„ç›®ã‹ã‚‚ã ã‘ã©)
 #if  defined _WIN32
  #ifdef FKS_FNAME_WCS_COMPILE
   #define FKS_FNAME_CHARNEXT(p)     (FKS_FNAME_CHAR*)FKS_W32_NS CharNextW((FKS_FNAME_CHAR*)(p))
@@ -127,15 +129,15 @@
 
 
 // ----------------------------------
-// win ˆÈŠO‚ÅAsjis‘Î‰‚·‚éê‡‚Ìˆ—.
+// win ä»¥å¤–ã§ã€sjiså¯¾å¿œã™ã‚‹å ´åˆã®å‡¦ç†.
 
-#if defined(FKS_USE_FNAME_MBC) && !defined(_WIN32) && !defined(FKS_FNAME_WCS_COMPILE)   //&& !defined(HAVE_MBCTYPE_H)   // win32ˆÈŠO‚Å, LANG‘Î‰‚·‚éê‡.
+#if defined(FKS_USE_FNAME_MBC) && !defined(_WIN32) && !defined(FKS_FNAME_WCS_COMPILE)   //&& !defined(HAVE_MBCTYPE_H)   // win32ä»¥å¤–ã§, LANGå¯¾å¿œã™ã‚‹å ´åˆ.
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/** ‚Æ‚è‚ ‚¦‚¸A0x5cŠÖŒW‚Ì‘Îˆ—p.
+/** ã¨ã‚Šã‚ãˆãšã€0x5cé–¢ä¿‚ã®å¯¾å‡¦ç”¨.
  */
 static FKS_LIB_DECL int fks_fnameMbcInit(void)
 {
@@ -144,11 +146,11 @@ static FKS_LIB_DECL int fks_fnameMbcInit(void)
     if (lang == 0)
         return 0;
     //s_fname_locale_ctype = strdup(lang);
-    // ja_JP.SJIS ‚Ì‚æ‚¤‚ÈŒ`®‚Å‚ ‚é‚±‚Æ‚ğ‘O’ñ‚ÉSJIS,big5,gbk‚©‚ğƒ`ƒFƒbƒN.
+    // ja_JP.SJIS ã®ã‚ˆã†ãªå½¢å¼ã§ã‚ã‚‹ã“ã¨ã‚’å‰æã«SJIS,big5,gbkã‹ã‚’ãƒã‚§ãƒƒã‚¯.
     p = FKS_STD strrchr(lang, '.');
     if (p) {
         const char* enc = p + 1;
-        // 0x5c‘Îô‚ª•K—v‚Èencoding‚©‚ğƒ`ƒFƒbƒN.
+        // 0x5cå¯¾ç­–ãŒå¿…è¦ãªencodingã‹ã‚’ãƒã‚§ãƒƒã‚¯.
         if (strncasecmp(enc, "sjis", 4) == 0) {
             return 1;
         } else if (strncasecmp(enc, "gbk", 3) == 0 || strncasecmp(enc, "gb2312", 6) == 0) {
@@ -192,7 +194,7 @@ static FKS_LIB_DECL int fks_fnameIsZenkaku1(unsigned c) {
 extern "C" {
 #endif
 
-/** â‘ÎƒpƒX‚©”Û‚©(ƒhƒ‰ƒCƒu–¼‚Ì—L–³‚ÍŠÖŒW‚È‚µ)
+/** çµ¶å¯¾ãƒ‘ã‚¹ã‹å¦ã‹(ãƒ‰ãƒ©ã‚¤ãƒ–åã®æœ‰ç„¡ã¯é–¢ä¿‚ãªã—)
  */
 FKS_LIB_DECL int    fks_fnameIsAbs(const FKS_FNAME_CHAR* path)
 {
@@ -203,11 +205,11 @@ FKS_LIB_DECL int    fks_fnameIsAbs(const FKS_FNAME_CHAR* path)
 }
 
 
-/** ƒhƒ‰ƒCƒu–¼‚ª‚Â‚¢‚Ä‚¢‚é‚©.
+/** ãƒ‰ãƒ©ã‚¤ãƒ–åãŒã¤ã„ã¦ã„ã‚‹ã‹.
  */
 FKS_LIB_DECL int        fks_fnameHasDrive(const FKS_FNAME_CHAR* path)
 {
-  #if 1 // æ“ª‚Ì"•¶š—ñ:"‚ğƒhƒ‰ƒCƒu–¼‚Æ‚İ‚È‚·.
+  #if 1 // å…ˆé ­ã®"æ–‡å­—åˆ—:"ã‚’ãƒ‰ãƒ©ã‚¤ãƒ–åã¨ã¿ãªã™.
     const FKS_FNAME_CHAR* s = path;
     if (s == 0)
         return 0;
@@ -220,7 +222,7 @@ FKS_LIB_DECL int        fks_fnameHasDrive(const FKS_FNAME_CHAR* path)
         }
     }
     return 0;
-  #else // ˆêšƒhƒ‰ƒCƒu–¼‚Ì‚İ‘Î‰‚·‚éê‡.
+  #else // ä¸€å­—ãƒ‰ãƒ©ã‚¤ãƒ–åã®ã¿å¯¾å¿œã™ã‚‹å ´åˆ.
    #if defined FKS_FNAME_WINDOS
     if (path == 0)
         return 0;
@@ -234,9 +236,9 @@ FKS_LIB_DECL int        fks_fnameHasDrive(const FKS_FNAME_CHAR* path)
 
 // ============================================================================
 
-/** size‚Éû‚Ü‚é•¶š—ñ‚Ì•¶š”‚ğ•Ô‚·. \0‚ğŠÜ‚Ü‚È‚¢.
- *  (winŠÂ‹«‚Å‚Í‚È‚é‚×‚­ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š‚Ì“r’†‚ÅI‚í‚ç‚È‚¢‚æ‚¤‚É‚·‚é.
- *   ‚¯‚ÇA—p“r“I‚É‚ÍØ‚ê‚éˆÈã‚ ‚Ü‚èˆÓ–¡‚È‚¢...)
+/** sizeã«åã¾ã‚‹æ–‡å­—åˆ—ã®æ–‡å­—æ•°ã‚’è¿”ã™. \0ã‚’å«ã¾ãªã„.
+ *  (winç’°å¢ƒã§ã¯ãªã‚‹ã¹ããƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—ã®é€”ä¸­ã§çµ‚ã‚ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹.
+ *   ã‘ã©ã€ç”¨é€”çš„ã«ã¯åˆ‡ã‚Œã‚‹ä»¥ä¸Šã‚ã¾ã‚Šæ„å‘³ãªã„...)
  */
 FKS_LIB_DECL unsigned   fks_fnameAdjustSize(const FKS_FNAME_CHAR* str, unsigned size)
 {
@@ -254,7 +256,7 @@ FKS_LIB_DECL unsigned   fks_fnameAdjustSize(const FKS_FNAME_CHAR* str, unsigned 
 }
 
 
-/** ƒtƒ@ƒCƒ‹–¼‚ÌƒRƒs[. mbc‚Ì‚Í•¶š‚ª‰ó‚ê‚È‚¢•”•ª‚Ü‚Å. dst == src ‚àok.
+/** ãƒ•ã‚¡ã‚¤ãƒ«åã®ã‚³ãƒ”ãƒ¼. mbcã®æ™‚ã¯æ–‡å­—ãŒå£Šã‚Œãªã„éƒ¨åˆ†ã¾ã§. dst == src ã‚‚ok.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameCpy(FKS_FNAME_CHAR dst[], unsigned dstSz, const FKS_FNAME_CHAR* src)
 {
@@ -265,13 +267,13 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameCpy(FKS_FNAME_CHAR dst[], unsigned dstS
         return NULL;
     l = fks_fnameAdjustSize(src, dstSz);
 
-    // ƒAƒhƒŒƒX‚ª“¯‚¶‚È‚çA’·‚³‚ğ‚ ‚í‚¹‚é‚Ì‚İ.
+    // ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒåŒã˜ãªã‚‰ã€é•·ã•ã‚’ã‚ã‚ã›ã‚‹ã®ã¿.
     if (dst == src) {
         dst[l] = 0;
         return dst;
     }
 
-    // ƒRƒs[.
+    // ã‚³ãƒ”ãƒ¼.
     {
         const FKS_FNAME_CHAR*   s = src;
         const FKS_FNAME_CHAR*   e = s + l;
@@ -285,7 +287,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameCpy(FKS_FNAME_CHAR dst[], unsigned dstS
 }
 
 
-/** ƒtƒ@ƒCƒ‹–¼•¶š—ñ‚Ì˜AŒ‹.
+/** ãƒ•ã‚¡ã‚¤ãƒ«åæ–‡å­—åˆ—ã®é€£çµ.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameCat(FKS_FNAME_CHAR dst[], unsigned dstSz, const FKS_FNAME_CHAR* src)
 {
@@ -295,7 +297,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameCat(FKS_FNAME_CHAR dst[], unsigned dstS
         return NULL;
     assert(src != 0 && dst != src);
     l = fks_fnameLen(dst);
-    if (l >= dstSz) {   // ‚»‚à‚»‚à“]‘—æ‚ª–”t‚È‚çƒTƒCƒY’²®‚Ì‚İ.
+    if (l >= dstSz) {   // ãã‚‚ãã‚‚è»¢é€å…ˆãŒæº€æ¯ãªã‚‰ã‚µã‚¤ã‚ºèª¿æ•´ã®ã¿.
         return fks_fnameCpy(dst, dstSz, dst);
     }
     fks_fnameCpy(dst+l, dstSz - l, src);
@@ -305,8 +307,8 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameCat(FKS_FNAME_CHAR dst[], unsigned dstS
 
 // ============================================================================
 
-/** ƒhƒ‰ƒCƒu–¼‚ª‚ ‚ê‚Î‚»‚ê‚ğƒXƒLƒbƒv‚µ‚½ƒ|ƒCƒ“ƒ^‚ğ•Ô‚·.
- *   ¦ c:“™‚¾‚¯‚Å‚È‚­http:‚àƒXƒLƒbƒv‚·‚é‚½‚ß "•¶š—ñ:" ‚ğƒXƒLƒbƒv.
+/** ãƒ‰ãƒ©ã‚¤ãƒ–åãŒã‚ã‚Œã°ãã‚Œã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ãŸãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™.
+ *   â€» c:ç­‰ã ã‘ã§ãªãhttp:ã‚‚ã‚¹ã‚­ãƒƒãƒ—ã™ã‚‹ãŸã‚ "æ–‡å­—åˆ—:" ã‚’ã‚¹ã‚­ãƒƒãƒ—.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSkipDrive(FKS_FNAME_const_CHAR* path)
 {
@@ -320,9 +322,9 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSkipDrive(FKS_FNAME_const_CHAR* path)
             ++s;
         }
     }
- #else  // 1šƒhƒ‰ƒCƒu–¼‚Ì‚İ‚Ì‘Î‰‚È‚ç‚±‚¿‚ç.
+ #else  // 1å­—ãƒ‰ãƒ©ã‚¤ãƒ–åã®ã¿ã®å¯¾å¿œãªã‚‰ã“ã¡ã‚‰.
   #if defined FKS_FNAME_WINDOS
-    if (path[0] && path[1] == FKS_FNAME_C(':'))     // ƒhƒ‰ƒCƒu–¼•t‚«‚¾‚Á‚½
+    if (path[0] && path[1] == FKS_FNAME_C(':'))     // ãƒ‰ãƒ©ã‚¤ãƒ–åä»˜ãã ã£ãŸ
         return (FKS_FNAME_CHAR*) path + 2;
     #endif
  #endif
@@ -330,7 +332,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSkipDrive(FKS_FNAME_const_CHAR* path)
 }
 
 
-/** •¶š—ñæ“ª‚Ìƒhƒ‰ƒCƒu–¼,ƒ‹[ƒgw’è‚ğƒXƒLƒbƒv‚µ‚½ƒ|ƒCƒ“ƒ^‚ğ•Ô‚·.
+/** æ–‡å­—åˆ—å…ˆé ­ã®ãƒ‰ãƒ©ã‚¤ãƒ–å,ãƒ«ãƒ¼ãƒˆæŒ‡å®šã‚’ã‚¹ã‚­ãƒƒãƒ—ã—ãŸãƒã‚¤ãƒ³ã‚¿ã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSkipDriveRoot(FKS_FNAME_const_CHAR* path)
 {
@@ -341,7 +343,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSkipDriveRoot(FKS_FNAME_const_CHAR* path)
 }
 
 
-/** ƒtƒ@ƒCƒ‹ƒpƒX–¼’†‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğœ‚¢‚½ƒtƒ@ƒCƒ‹–¼‚ÌˆÊ’u‚ğ•Ô‚·.
+/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹åä¸­ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’é™¤ã„ãŸãƒ•ã‚¡ã‚¤ãƒ«åã®ä½ç½®ã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameBaseName(FKS_FNAME_const_CHAR *adr)
 {
@@ -356,7 +358,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameBaseName(FKS_FNAME_const_CHAR *adr)
 }
 
 
-/** Šg’£q‚ÌˆÊ’u‚ğ•Ô‚·. '.'‚ÍŠÜ‚Ş. ‚È‚¯‚ê‚Î•¶š—ñ‚ÌÅŒã‚ğ•Ô‚·.
+/** æ‹¡å¼µå­ã®ä½ç½®ã‚’è¿”ã™. '.'ã¯å«ã‚€. ãªã‘ã‚Œã°æ–‡å­—åˆ—ã®æœ€å¾Œã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameExt(FKS_FNAME_const_CHAR *name)
 {
@@ -373,7 +375,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameExt(FKS_FNAME_const_CHAR *name)
 
 // ============================================================================
 
-/** ƒtƒ@ƒCƒ‹ƒpƒX–¼’†‚ÌŠg’£q‚ğíœ‚·‚é.
+/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹åä¸­ã®æ‹¡å¼µå­ã‚’å‰Šé™¤ã™ã‚‹.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameDelExt(FKS_FNAME_CHAR buf[])
 {
@@ -390,7 +392,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameDelExt(FKS_FNAME_CHAR buf[])
 }
 
 
-/** ƒtƒ@ƒCƒ‹ƒpƒX–¼’†‚ÌŠg’£q‚ğœ‚¢‚½•”•ª‚Ìæ“¾.
+/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹åä¸­ã®æ‹¡å¼µå­ã‚’é™¤ã„ãŸéƒ¨åˆ†ã®å–å¾—.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetNoExt(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR *src)
 {
@@ -412,7 +414,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetNoExt(FKS_FNAME_CHAR dst[], unsigned si
 }
 
 
-/** ƒtƒ@ƒCƒ‹ƒpƒX–¼’†‚ÌƒfƒBƒŒƒNƒgƒŠ‚ÆŠg’£q‚ğœ‚¢‚½ƒtƒ@ƒCƒ‹–¼‚Ìæ“¾.
+/** ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹åä¸­ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨æ‹¡å¼µå­ã‚’é™¤ã„ãŸãƒ•ã‚¡ã‚¤ãƒ«åã®å–å¾—.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetBaseNameNoExt(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR *src)
 {
@@ -434,8 +436,8 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetBaseNameNoExt(FKS_FNAME_CHAR dst[], uns
 }
 
 
-/** Šg’£q‚ğAext ‚É•ÏX‚·‚é. dst == src ‚Å‚à‚æ‚¢.
- *  ext = NULL or "" ‚Ì‚Æ‚«‚Í Šg’£qíœ.
+/** æ‹¡å¼µå­ã‚’ã€ext ã«å¤‰æ›´ã™ã‚‹. dst == src ã§ã‚‚ã‚ˆã„.
+ *  ext = NULL or "" ã®ã¨ãã¯ æ‹¡å¼µå­å‰Šé™¤.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSetExt(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR* src, const FKS_FNAME_CHAR *ext)
 {
@@ -450,7 +452,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSetExt(FKS_FNAME_CHAR dst[], unsigned size
 }
 
 
-/** Šg’£q‚ª‚È‚¢ê‡AŠg’£q‚ğ’Ç‰Á‚·‚é.(‚ ‚ê‚Î‰½‚à‚µ‚È‚¢). dst == src ‚Å‚à‚æ‚¢.
+/** æ‹¡å¼µå­ãŒãªã„å ´åˆã€æ‹¡å¼µå­ã‚’è¿½åŠ ã™ã‚‹.(ã‚ã‚Œã°ä½•ã‚‚ã—ãªã„). dst == src ã§ã‚‚ã‚ˆã„.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSetDefaultExt(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR* src, const FKS_FNAME_CHAR *ext)
 {
@@ -478,7 +480,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameSetDefaultExt(FKS_FNAME_CHAR dst[], unsign
 
 // ============================================================================
 
-/** ƒhƒ‰ƒCƒu–¼•”•ª‚ğæ“¾. :‚Â‚«. ¦ file:“™‚Ì‘Îˆ‚Ì‚½‚ß"•¶š—ñ:"‚ğƒhƒ‰ƒCƒuˆµ‚¢
+/** ãƒ‰ãƒ©ã‚¤ãƒ–åéƒ¨åˆ†ã‚’å–å¾—. :ã¤ã. â€» file:ç­‰ã®å¯¾å‡¦ã®ãŸã‚"æ–‡å­—åˆ—:"ã‚’ãƒ‰ãƒ©ã‚¤ãƒ–æ‰±ã„
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetDrive(FKS_FNAME_CHAR drive[], unsigned size, const FKS_FNAME_CHAR *name)
 {
@@ -498,7 +500,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetDrive(FKS_FNAME_CHAR drive[], unsigned 
 }
 
 
-/** ƒhƒ‰ƒCƒu–¼‚Æƒ‹[ƒgw’è•”•ª‚ğæ“¾.
+/** ãƒ‰ãƒ©ã‚¤ãƒ–åã¨ãƒ«ãƒ¼ãƒˆæŒ‡å®šéƒ¨åˆ†ã‚’å–å¾—.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetDriveRoot(FKS_FNAME_CHAR dr[], unsigned size, const FKS_FNAME_CHAR *name)
 {
@@ -518,7 +520,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetDriveRoot(FKS_FNAME_CHAR dr[], unsigned
 }
 
 
-/** ƒfƒBƒŒƒNƒgƒŠ•”•ª‚ğ•Ô‚·. ÅŒã‚ÌƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^‚ÍŠO‚·.
+/** ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªéƒ¨åˆ†ã‚’è¿”ã™. æœ€å¾Œã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã¯å¤–ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetDir(FKS_FNAME_CHAR dir[], unsigned size, const FKS_FNAME_CHAR *name)
 {
@@ -544,7 +546,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameGetDir(FKS_FNAME_CHAR dir[], unsigned size
 
 // ============================================================================
 
-/** •¶š—ñ‚ÌÅŒã‚É \ ‚© / ‚ª‚ ‚ê‚Î‚»‚ÌˆÊ’u‚ğ•Ô‚µA‚È‚¯‚ê‚ÎNULL‚ğ•Ô‚·.
+/** æ–‡å­—åˆ—ã®æœ€å¾Œã« \ ã‹ / ãŒã‚ã‚Œã°ãã®ä½ç½®ã‚’è¿”ã—ã€ãªã‘ã‚Œã°NULLã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameCheckPosSep(FKS_FNAME_const_CHAR* dir, int ofs)
 {
@@ -560,7 +562,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameCheckPosSep(FKS_FNAME_const_CHAR* dir, int
             else if (*p == FKS_FNAME_C('\\')) {
               #ifdef FKS_FNAME_WCS_COMPILE
                 return (FKS_FNAME_CHAR *)p;
-              #else     // adjust_size‚ÌŒ‹‰Ê‚ªofs–¢–‚É‚È‚Á‚Ä‚½‚ç*p‚Íƒ}ƒ‹ƒ`ƒoƒCƒg•¶š‚Ìˆê•”.
+              #else     // adjust_sizeã®çµæœãŒofsæœªæº€ã«ãªã£ã¦ãŸã‚‰*pã¯ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—ã®ä¸€éƒ¨.
                 if (fks_fnameAdjustSize(s, ofs+1) == ofs)
                     return (FKS_FNAME_CHAR *)p;
               #endif
@@ -572,7 +574,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameCheckPosSep(FKS_FNAME_const_CHAR* dir, int
 }
 
 
-/** •¶š—ñ‚ÌÅŒã‚É \ ‚© / ‚ª‚ ‚ê‚Î‚»‚ÌˆÊ’u‚ğ•Ô‚µA‚È‚¯‚ê‚ÎNULL‚ğ•Ô‚·.
+/** æ–‡å­—åˆ—ã®æœ€å¾Œã« \ ã‹ / ãŒã‚ã‚Œã°ãã®ä½ç½®ã‚’è¿”ã—ã€ãªã‘ã‚Œã°NULLã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameCheckLastSep(FKS_FNAME_const_CHAR* dir)
 {
@@ -582,7 +584,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameCheckLastSep(FKS_FNAME_const_CHAR* dir)
 }
 
 
-/** •¶š—ñ‚ÌÅŒã‚É \ ‚© / ‚ª‚ ‚ê‚Îíœ
+/** æ–‡å­—åˆ—ã®æœ€å¾Œã« \ ã‹ / ãŒã‚ã‚Œã°å‰Šé™¤
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameDelLastSep(FKS_FNAME_CHAR dir[])
 {
@@ -594,7 +596,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameDelLastSep(FKS_FNAME_CHAR dir[])
 }
 
 
-/** •¶š—ñ‚ÌÅŒã‚É ƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^•¶š‚ª‚È‚¯‚ê‚Î’Ç‰Á.
+/** æ–‡å­—åˆ—ã®æœ€å¾Œã« ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿æ–‡å­—ãŒãªã‘ã‚Œã°è¿½åŠ .
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameAddSep(FKS_FNAME_CHAR dir[], unsigned size)
 {
@@ -611,7 +613,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameAddSep(FKS_FNAME_CHAR dir[], unsigned size
 }
 
 
-/** ƒfƒBƒŒƒNƒgƒŠ–¼‚Æƒtƒ@ƒCƒ‹–¼‚ğ‚­‚Á‚Â‚¯‚é. fks_fnameCat ‚Æˆá‚¢A\ / ‚ğŠÔ‚É•t‰Á.
+/** ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã¨ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ãã£ã¤ã‘ã‚‹. fks_fnameCat ã¨é•ã„ã€\ / ã‚’é–“ã«ä»˜åŠ .
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameJoin(FKS_FNAME_CHAR buf[], unsigned bufSz, const FKS_FNAME_CHAR *dir, const FKS_FNAME_CHAR *name)
 {
@@ -625,7 +627,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameJoin(FKS_FNAME_CHAR buf[], unsigned bufSz,
 
 // ============================================================================
 
-/** ‘SŠp‚QƒoƒCƒg–Ú‚ğl—¶‚µ‚½ strupr
+/** å…¨è§’ï¼’ãƒã‚¤ãƒˆç›®ã‚’è€ƒæ…®ã—ãŸ strupr
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameToUpper(FKS_FNAME_CHAR name[])
 {
@@ -640,7 +642,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameToUpper(FKS_FNAME_CHAR name[])
 }
 
 
-/** ‘SŠp‚QƒoƒCƒg–Ú‚ğl—¶‚µ‚½ strlwr
+/** å…¨è§’ï¼’ãƒã‚¤ãƒˆç›®ã‚’è€ƒæ…®ã—ãŸ strlwr
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameToLower(FKS_FNAME_CHAR name[])
 {
@@ -656,7 +658,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameToLower(FKS_FNAME_CHAR name[])
 }
 
 
-/** filePath’†‚Ì \ ‚ğ / ‚É’uŠ·.
+/** filePathä¸­ã® \ ã‚’ / ã«ç½®æ›.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR     *fks_fnameBackslashToSlash(FKS_FNAME_CHAR filePath[])
 {
@@ -672,7 +674,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR     *fks_fnameBackslashToSlash(FKS_FNAME_CHAR filePa
 }
 
 
-/** filePath’†‚Ì / ‚ğ \ ‚É’uŠ·.
+/** filePathä¸­ã® / ã‚’ \ ã«ç½®æ›.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR     *fks_fnameSlashToBackslash(FKS_FNAME_CHAR filePath[])
 {
@@ -698,7 +700,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpath(FKS_FNAME_CHAR dst[], unsigned
 }
 
 
-/** ƒtƒ‹ƒpƒX¶¬. ƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^‚ğ\\‚É‚µ‚Ä•Ô‚·ƒo[ƒWƒ‡ƒ“.
+/** ãƒ•ãƒ«ãƒ‘ã‚¹ç”Ÿæˆ. ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã‚’\\ã«ã—ã¦è¿”ã™ãƒãƒ¼ã‚¸ãƒ§ãƒ³.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathBS(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR* path, const FKS_FNAME_CHAR* currentDir)
 {
@@ -708,9 +710,9 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathBS(FKS_FNAME_CHAR dst[], unsign
 }
 
 
-/** ƒtƒ‹ƒpƒX¶¬. •¶š—ñ‘€ì‚Ì‚İ. ƒJƒŒƒ“ƒgƒpƒX‚Íˆø”‚Å“n‚·.
- *  currentDir ‚Íâ‘ÎƒpƒX‚Å‚ ‚é‚±‚Æ. ‚»‚¤‚Å‚È‚¢ê‡‚Ì‹““®‚Í•s’è.
- *  '\'•¶š‘Îô‚ÅAƒZƒpƒŒ[ƒ^‚Í'/'‚É’u‚«Š·‚Ä‚¢‚é.
+/** ãƒ•ãƒ«ãƒ‘ã‚¹ç”Ÿæˆ. æ–‡å­—åˆ—æ“ä½œã®ã¿. ã‚«ãƒ¬ãƒ³ãƒˆãƒ‘ã‚¹ã¯å¼•æ•°ã§æ¸¡ã™.
+ *  currentDir ã¯çµ¶å¯¾ãƒ‘ã‚¹ã§ã‚ã‚‹ã“ã¨. ãã†ã§ãªã„å ´åˆã®æŒ™å‹•ã¯ä¸å®š.
+ *  '\'æ–‡å­—å¯¾ç­–ã§ã€ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã¯'/'ã«ç½®ãæ›ã¦ã„ã‚‹.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathSL(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR* path, const FKS_FNAME_CHAR* currentDir)
 {
@@ -725,12 +727,12 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathSL(FKS_FNAME_CHAR dst[], unsign
     assert(fks_fnameIsAbs(currentDir));
 
   #if !(defined FKS_USE_FNAME_ALLOCA)
-    // ‘‚«‚İæƒTƒCƒY‚ª\•ª‚Å‚È‚¯‚ê‚Îì‹Æ—pƒƒ‚ƒŠ‚ğŠm•Û.
+    // æ›¸ãè¾¼ã¿å…ˆã‚µã‚¤ã‚ºãŒååˆ†ã§ãªã‘ã‚Œã°ä½œæ¥­ç”¨ãƒ¡ãƒ¢ãƒªã‚’ç¢ºä¿.
     {
         unsigned pl = fks_fnameLen(path);
         unsigned cl = fks_fnameLen(currentDir);
         wkSz = pl + cl + 4;
-        if (wkSz >= size) {     // dstƒTƒCƒY‚æ‚è‚àAŒ³‚ª‘½‚¢‚È‚çƒ[ƒN‚ğ—pˆÓ.
+        if (wkSz >= size) {     // dstã‚µã‚¤ã‚ºã‚ˆã‚Šã‚‚ã€å…ƒãŒå¤šã„ãªã‚‰ãƒ¯ãƒ¼ã‚¯ã‚’ç”¨æ„.
             assert( wkSz <= FKS_FNAME_MAX_URL * sizeof(FKS_FNAME_CHAR) );
             wk = (FKS_FNAME_CHAR*)alloca(wkSz*sizeof(FKS_FNAME_CHAR));
             if (wk == 0) {
@@ -742,27 +744,27 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathSL(FKS_FNAME_CHAR dst[], unsign
             wk   = dst;
         }
     }
-  #else // alloca‚ğ‘S‚­g‚í‚È‚¢ê‡‚Ío—Íæ‚ğ’¼Úg‚¤‚¾‚¯.
+  #else // allocaã‚’å…¨ãä½¿ã‚ãªã„å ´åˆã¯å‡ºåŠ›å…ˆã‚’ç›´æ¥ä½¿ã†ã ã‘.
     wkSz = size;
     wk   = dst;
   #endif
 
-    // ì‹Æ—p‚Ìâ‘ÎƒpƒX‚ğì‚é.
+    // ä½œæ¥­ç”¨ã®çµ¶å¯¾ãƒ‘ã‚¹ã‚’ä½œã‚‹.
     {
         unsigned hasDrive = fks_fnameHasDrive(path);
         unsigned isAbs    = fks_fnameIsAbs(path);
         wk[0] = 0;
-        if (isAbs && hasDrive) {    // ƒhƒ‰ƒCƒu•t‚«â‘ÎƒpƒX‚È‚çA‚»‚Ì‚Ü‚Ü.
+        if (isAbs && hasDrive) {    // ãƒ‰ãƒ©ã‚¤ãƒ–ä»˜ãçµ¶å¯¾ãƒ‘ã‚¹ãªã‚‰ã€ãã®ã¾ã¾.
             fks_fnameCpy(wk, wkSz, path);
         } else if (isAbs) {
-            if (fks_fnameHasDrive(currentDir)) {   // â‘ÎƒpƒX‚¾‚¯‚Çƒhƒ‰ƒCƒu‚ª‚È‚¢ê‡‚ÍcurrentDir‚©‚çƒhƒ‰ƒCƒu‚¾‚¯‚¢‚½‚¾‚­.
+            if (fks_fnameHasDrive(currentDir)) {   // çµ¶å¯¾ãƒ‘ã‚¹ã ã‘ã©ãƒ‰ãƒ©ã‚¤ãƒ–ãŒãªã„å ´åˆã¯currentDirã‹ã‚‰ãƒ‰ãƒ©ã‚¤ãƒ–ã ã‘ã„ãŸã ã.
                 fks_fnameGetDrive(wk, wkSz, currentDir);
             }
             fks_fnameCat(wk, wkSz, path);
         } else {
-            if (hasDrive) {         // ƒhƒ‰ƒCƒu•t‚«‘Š‘ÎƒpƒX‚ÅA
-                if (!fks_fnameHasDrive(currentDir))    // ƒJƒŒƒ“ƒg‘¤‚Éƒhƒ‰ƒCƒu‚ª‚È‚¯‚ê‚Î
-                    fks_fnameGetDrive(wk, wkSz, path); // path‚Ìƒhƒ‰ƒCƒu–¼‚ğİ’è. ‚¿‚ª‚¦‚ÎƒJƒŒƒ“ƒg‘¤‚Ìƒhƒ‰ƒCƒu–¼‚É‚È‚é.
+            if (hasDrive) {         // ãƒ‰ãƒ©ã‚¤ãƒ–ä»˜ãç›¸å¯¾ãƒ‘ã‚¹ã§ã€
+                if (!fks_fnameHasDrive(currentDir))    // ã‚«ãƒ¬ãƒ³ãƒˆå´ã«ãƒ‰ãƒ©ã‚¤ãƒ–ãŒãªã‘ã‚Œã°
+                    fks_fnameGetDrive(wk, wkSz, path); // pathã®ãƒ‰ãƒ©ã‚¤ãƒ–åã‚’è¨­å®š. ã¡ãŒãˆã°ã‚«ãƒ¬ãƒ³ãƒˆå´ã®ãƒ‰ãƒ©ã‚¤ãƒ–åã«ãªã‚‹.
             }
             fks_fnameCat(wk, wkSz, currentDir);
             fks_fnameAddSep(wk, wkSz);
@@ -771,41 +773,41 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathSL(FKS_FNAME_CHAR dst[], unsign
     }
 
   #if defined FKS_FNAME_WINDOS
-    // ˆ—‚ğŠÈ’P‚É‚·‚é‚½‚ßAƒpƒX‚Ì‹æØ‚è‚ğˆê’U / ‚É•ÏŠ·.
+    // å‡¦ç†ã‚’ç°¡å˜ã«ã™ã‚‹ãŸã‚ã€ãƒ‘ã‚¹ã®åŒºåˆ‡ã‚Šã‚’ä¸€æ—¦ / ã«å¤‰æ›.
     fks_fnameBackslashToSlash(wk);
   #endif
 
-    // "." ‚â ".." ‚ğæ‚èœ‚­.
+    // "." ã‚„ ".." ã‚’å–ã‚Šé™¤ã.
     {
-        // ‚±‚Ì“_‚Åwk‚Í•K‚¸â‘ÎƒpƒX‚É‚È‚Á‚Ä‚¢‚é.(currentDir‚ªˆá”½‚µ‚Ä‚½ê‡‚Ì‹““®‚Í•s’èˆµ‚¢).
-        FKS_FNAME_CHAR*     s     = fks_fnameSkipDrive(wk);    // ƒhƒ‰ƒCƒu–¼‚Í˜M‚ç‚È‚¢‚Ì‚ÅƒXƒLƒbƒv.
+        // ã“ã®æ™‚ç‚¹ã§wkã¯å¿…ãšçµ¶å¯¾ãƒ‘ã‚¹ã«ãªã£ã¦ã„ã‚‹.(currentDirãŒé•åã—ã¦ãŸå ´åˆã®æŒ™å‹•ã¯ä¸å®šæ‰±ã„).
+        FKS_FNAME_CHAR*     s     = fks_fnameSkipDrive(wk);    // ãƒ‰ãƒ©ã‚¤ãƒ–åã¯å¼„ã‚‰ãªã„ã®ã§ã‚¹ã‚­ãƒƒãƒ—.
         FKS_FNAME_CHAR*     d     = s;
         FKS_FNAME_CHAR*     top   = d;
         unsigned            first = 1;
         while (*s) {
             unsigned c = *s++;
             if (c == FKS_FNAME_C('/')) {
-                if (first) {    // ‰‰ñ‚Ì / ‚Í "//" "///" ‚ğ‹–‚·... ‚ ‚Æ‚Å*d++=c‚·‚é‚Ì‚Å‚±‚±‚Å‚Í2‰ñ‚Ü‚Å.
+                if (first) {    // åˆå›ã® / ã¯ "//" "///" ã‚’è¨±ã™... ã‚ã¨ã§*d++=cã™ã‚‹ã®ã§ã“ã“ã§ã¯2å›ã¾ã§.
                     unsigned i;
                     for (i = 0; i < 2 && *s == FKS_FNAME_C('/'); ++i) {
                         *d++ = *s++;
                     }
                 }
                 first = 0;
-                // '/'‚Ì˜A‘±‚Íˆê‚Â‚Ì'/'ˆµ‚¢.
+                // '/'ã®é€£ç¶šã¯ä¸€ã¤ã®'/'æ‰±ã„.
               RETRY:
                 while (*s == FKS_FNAME_C('/'))
                     ++s;
                 if (*s == FKS_FNAME_C('.')) {
-                    if (s[1] == 0) {                    // "." ‚Ì‚İ‚Í–³‹.
+                    if (s[1] == 0) {                    // "." ã®ã¿ã¯ç„¡è¦–.
                         s += 1;
                         goto RETRY;
-                    } else if (s[1] == FKS_FNAME_C('/')) {      // "./" ‚Í–³‹.
+                    } else if (s[1] == FKS_FNAME_C('/')) {      // "./" ã¯ç„¡è¦–.
                         s += 2;
                         goto RETRY;
-                    } else if (s[1] == FKS_FNAME_C('.') && (s[2] == FKS_FNAME_C('/') || s[2] == 0)) {   // "../" ".." ‚Ì‚Æ‚«.
+                    } else if (s[1] == FKS_FNAME_C('.') && (s[2] == FKS_FNAME_C('/') || s[2] == 0)) {   // "../" ".." ã®ã¨ã.
                         s += 2 + (s[2] != 0);
-                        while (d > top && *--d != FKS_FNAME_C('/')) {   // o—Íæ‚ÌƒfƒBƒŒƒNƒgƒŠŠK‘w‚ğ‚P‚ÂŒ¸‚ç‚·.
+                        while (d > top && *--d != FKS_FNAME_C('/')) {   // å‡ºåŠ›å…ˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªéšå±¤ã‚’ï¼‘ã¤æ¸›ã‚‰ã™.
                             ;
                         }
                         goto RETRY;
@@ -818,7 +820,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathSL(FKS_FNAME_CHAR dst[], unsign
     }
 
   #if !(defined FKS_USE_FNAME_ALLOCA)
-    if (wk != dst) {    // ƒ[ƒN‚ğalloca‚µ‚Ä‚½‚Ì‚È‚çAƒRƒs[.
+    if (wk != dst) {    // ãƒ¯ãƒ¼ã‚¯ã‚’allocaã—ã¦ãŸã®ãªã‚‰ã€ã‚³ãƒ”ãƒ¼.
         fks_fnameCpy(dst, size, wk);
     }
   #endif
@@ -828,11 +830,11 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameFullpathSL(FKS_FNAME_CHAR dst[], unsign
 
 
 // ============================================================================
-#if 1   // –{—ˆ‚Í•Êƒ‚ƒWƒ…[ƒ‹‚¾‚ª‚Â‚¢‚Å.
-/** ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚âA;‹æØ‚è‚Ì•¡”ƒpƒXw’è‚ğA•ª‰ğ‚·‚é‚Ì‚Ég‚¤.
- *  ""‚ÍwinƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚É‚ ‚í‚¹‚½ˆµ‚¢.
- *  sepChr‚Å‹æØ‚ç‚ê‚½•¶š—ñ(ƒtƒ@ƒCƒ‹–¼)‚ğæ“¾. 0x20ˆÈŠO‚Ì‹ó”’‚Í–³‹‚©0x20ˆµ‚¢.
- *  @return ƒXƒLƒƒƒ“XVŒã‚ÌƒAƒhƒŒƒX‚ğ•Ô‚·Bstr‚ªEOS‚¾‚Á‚½‚çNULL‚ğ•Ô‚·.
+#if 1   // æœ¬æ¥ã¯åˆ¥ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã ãŒã¤ã„ã§.
+/** ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã‚„ã€;åŒºåˆ‡ã‚Šã®è¤‡æ•°ãƒ‘ã‚¹æŒ‡å®šã‚’ã€åˆ†è§£ã™ã‚‹ã®ã«ä½¿ã†.
+ *  ""ã¯winã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã«ã‚ã‚ã›ãŸæ‰±ã„.
+ *  sepChrã§åŒºåˆ‡ã‚‰ã‚ŒãŸæ–‡å­—åˆ—(ãƒ•ã‚¡ã‚¤ãƒ«å)ã‚’å–å¾—. 0x20ä»¥å¤–ã®ç©ºç™½ã¯ç„¡è¦–ã‹0x20æ‰±ã„.
+ *  @return ã‚¹ã‚­ãƒ£ãƒ³æ›´æ–°å¾Œã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¿”ã™ã€‚strãŒEOSã ã£ãŸã‚‰NULLã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameScanArgStr(FKS_FNAME_CHAR arg[], unsigned argSz, const FKS_FNAME_CHAR *str, unsigned sepChr)
 {
@@ -848,11 +850,11 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameScanArgStr(FKS_FNAME_CHAR arg[], unsigned 
 
     assert( str != 0 && arg != 0 && argSz > 1 );
 
-    // 0x20ˆÈŠO‚Ì‹ó”’‚ÆƒZƒpƒŒ[ƒ^‚ğƒXƒLƒbƒv.
+    // 0x20ä»¥å¤–ã®ç©ºç™½ã¨ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã‚’ã‚¹ã‚­ãƒƒãƒ—.
     while ( *s == sepChr || (*s > 0U && *s < 0x20U) || *s == 0x7fU) {
         ++s;
     }
-    if (*s == 0) {  // EOS‚¾‚Á‚½‚çAŒ©‚Â‚©‚ç‚È‚©‚Á‚½‚Æ‚µ‚ÄNULL‚ğ•Ô‚·.
+    if (*s == 0) {  // EOSã ã£ãŸã‚‰ã€è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸã¨ã—ã¦NULLã‚’è¿”ã™.
         arg[0] = 0;
         return NULL;
     }
@@ -860,14 +862,14 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameScanArgStr(FKS_FNAME_CHAR arg[], unsigned 
     do {
         c = *s++;
         if (c == FKS_FNAME_C('"')) {
-            f ^= 1;                         // "‚Ì‘Î‚ÌŠÔ‚Í‹ó”’‚ğƒtƒ@ƒCƒ‹–¼‚É‹–‚·.‚½‚ß‚Ìƒtƒ‰ƒO.
+            f ^= 1;                         // "ã®å¯¾ã®é–“ã¯ç©ºç™½ã‚’ãƒ•ã‚¡ã‚¤ãƒ«åã«è¨±ã™.ãŸã‚ã®ãƒ•ãƒ©ã‚°.
 
-            // ‚¿‚å‚Á‚Æ‹C‚¿ˆ«‚¢‚ªAWin(XP)‚Ìcmd.exe‚Ì‹““®‚É‡‚í‚¹‚Ä‚İ‚é.
-            // (‚Ù‚ñ‚Æ‚É‚ ‚Á‚Ä‚é‚©A\•ª‚É‚Í’²‚×‚Ä‚È‚¢)
-            if (*s == FKS_FNAME_C('"') && f == 0)   // •Â‚¶"‚Ì’¼Œã‚É‚³‚ç‚É"‚ª‚ ‚ê‚ÎA‚»‚ê‚Í‚»‚Ì‚Ü‚Ü•\¦‚·‚é.
+            // ã¡ã‚‡ã£ã¨æ°—æŒã¡æ‚ªã„ãŒã€Win(XP)ã®cmd.exeã®æŒ™å‹•ã«åˆã‚ã›ã¦ã¿ã‚‹.
+            // (ã»ã‚“ã¨ã«ã‚ã£ã¦ã‚‹ã‹ã€ååˆ†ã«ã¯èª¿ã¹ã¦ãªã„)
+            if (*s == FKS_FNAME_C('"') && f == 0)   // é–‰ã˜"ã®ç›´å¾Œã«ã•ã‚‰ã«"ãŒã‚ã‚Œã°ã€ãã‚Œã¯ãã®ã¾ã¾è¡¨ç¤ºã™ã‚‹.
                 ++s;
             else
-                continue;                   // ’Êí‚Í " ‚ÍÈ‚¢‚Ä‚µ‚Ü‚¤.
+                continue;                   // é€šå¸¸ã¯ " ã¯çœã„ã¦ã—ã¾ã†.
         }
         if ((c > 0 && c < 0x20) || c == 0x7f)
             c = FKS_FNAME_C(' ');
@@ -884,8 +886,8 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameScanArgStr(FKS_FNAME_CHAR arg[], unsigned 
 
 // ============================================================================
 
-// ƒtƒ@ƒCƒ‹–¼•¶š—ñ‚Ìƒ|ƒCƒ“ƒ^p‚©‚ç1•¶šæ“¾‚µ‚Äc‚É‚¢‚ê‚éƒ}ƒNƒ.
-// os‚ªwin‚È‚ç2ƒoƒCƒg•¶š‘Î‰‚Å¬•¶š‰». utf8‚Í”j’].
+// ãƒ•ã‚¡ã‚¤ãƒ«åæ–‡å­—åˆ—ã®ãƒã‚¤ãƒ³ã‚¿pã‹ã‚‰1æ–‡å­—å–å¾—ã—ã¦cã«ã„ã‚Œã‚‹ãƒã‚¯ãƒ­.
+// osãŒwinãªã‚‰2ãƒã‚¤ãƒˆæ–‡å­—å¯¾å¿œã§å°æ–‡å­—åŒ–. utf8ã¯ç ´ç¶».
 #ifdef FKS_FNAME_WCS_COMPILE
  #if defined FKS_FNAME_WINDOS
   #define FKS_FNAME_GET_C(c, p)     ((c) = *((p)++), (c) = FKS_FNAME_TO_LOWER(c))
@@ -911,9 +913,9 @@ FKS_LIB_DECL FKS_FNAME_CHAR *fks_fnameScanArgStr(FKS_FNAME_CHAR arg[], unsigned 
 #endif
 
 
-/** ƒtƒ@ƒCƒ‹–¼‚Ì‘å¬”äŠr.
- *  win/dosŒn‚Í‘å¬“¯ˆê‹. ƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^ \ / ‚à“¯ˆê‹.
- *  ˆÈŠO‚Í’Pƒ‚É•¶š—ñ”äŠr.
+/** ãƒ•ã‚¡ã‚¤ãƒ«åã®å¤§å°æ¯”è¼ƒ.
+ *  win/dosç³»ã¯å¤§å°åŒä¸€è¦–. ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ \ / ã‚‚åŒä¸€è¦–.
+ *  ä»¥å¤–ã¯å˜ç´”ã«æ–‡å­—åˆ—æ¯”è¼ƒ.
  */
 FKS_LIB_DECL int fks_fnameCmp(const FKS_FNAME_CHAR* l, const FKS_FNAME_CHAR* r)
 {
@@ -921,9 +923,9 @@ FKS_LIB_DECL int fks_fnameCmp(const FKS_FNAME_CHAR* l, const FKS_FNAME_CHAR* r)
 }
 
 
-/** ƒtƒ@ƒCƒ‹–¼‚Ì‘å¬”äŠr.
- *  win/dosŒn‚Í‘å¬“¯ˆê‹. ƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^ \ / ‚à“¯ˆê‹.
- *  ˆÈŠO‚Í’Pƒ‚É•¶š—ñ”äŠr.
+/** ãƒ•ã‚¡ã‚¤ãƒ«åã®å¤§å°æ¯”è¼ƒ.
+ *  win/dosç³»ã¯å¤§å°åŒä¸€è¦–. ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ \ / ã‚‚åŒä¸€è¦–.
+ *  ä»¥å¤–ã¯å˜ç´”ã«æ–‡å­—åˆ—æ¯”è¼ƒ.
  */
 FKS_LIB_DECL int   fks_fnameNCmp(const FKS_FNAME_CHAR* l, const FKS_FNAME_CHAR* r, unsigned len)
 {
@@ -974,9 +976,9 @@ FKS_LIB_DECL int   fks_fnameNCmp(const FKS_FNAME_CHAR* l, const FKS_FNAME_CHAR* 
 }
 
 
-/** ƒtƒ@ƒCƒ‹–¼‚Ì‘å¬”äŠr. ”’l‚ª‚ ‚Á‚½ê‡AŒ…”ˆá‚¢‚Ì”’l“¯m‚Ì‘å¬‚ğ”½‰f
- *  win/dosŒn‚Í‘å¬“¯ˆê‹. ƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^ \ / ‚à“¯ˆê‹.
- *  ˆÈŠO‚Í’Pƒ‚É•¶š—ñ”äŠr.
+/** ãƒ•ã‚¡ã‚¤ãƒ«åã®å¤§å°æ¯”è¼ƒ. æ•°å€¤ãŒã‚ã£ãŸå ´åˆã€æ¡æ•°é•ã„ã®æ•°å€¤åŒå£«ã®å¤§å°ã‚’åæ˜ 
+ *  win/dosç³»ã¯å¤§å°åŒä¸€è¦–. ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ \ / ã‚‚åŒä¸€è¦–.
+ *  ä»¥å¤–ã¯å˜ç´”ã«æ–‡å­—åˆ—æ¯”è¼ƒ.
  */
 FKS_LIB_DECL int   fks_fnameDigitCmp(const FKS_FNAME_CHAR* l, const FKS_FNAME_CHAR* r)
 {
@@ -1019,8 +1021,8 @@ FKS_LIB_DECL int   fks_fnameDigitCmp(const FKS_FNAME_CHAR* l, const FKS_FNAME_CH
 }
 
 
-/** fname‚ªbaseName‚Ån‚Ü‚Á‚Ä‚¢‚ê‚ÎAfname‚Ì—]•ª‚Ìæ“ª‚ÌƒAƒhƒŒƒX‚ğ•Ô‚·.
- *  ƒ}ƒbƒ`‚µ‚Ä‚¢‚È‚¯‚ê‚ÎNULL‚ğ•Ô‚·.
+/** fnameãŒbaseNameã§å§‹ã¾ã£ã¦ã„ã‚Œã°ã€fnameã®ä½™åˆ†ã®å…ˆé ­ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¿”ã™.
+ *  ãƒãƒƒãƒã—ã¦ã„ãªã‘ã‚Œã°NULLã‚’è¿”ã™.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*     fks_fnameEquLong(FKS_FNAME_const_CHAR* fname, const FKS_FNAME_CHAR* baseName)
 {
@@ -1033,19 +1035,19 @@ FKS_LIB_DECL FKS_FNAME_CHAR*     fks_fnameEquLong(FKS_FNAME_const_CHAR* fname, c
 }
 
 
-/** ?,* ‚Ì‚İ‚Ì(dos/win‚È)ƒƒCƒ‹ƒhƒJ[ƒh•¶š—ñ”äŠr.
- * *,? ‚ÍƒZƒpƒŒ[ƒ^‚É‚Íƒ}ƒbƒ`‚µ‚È‚¢.
- * ‚½‚¾‚µŠg’£‚µ‚Ä ** ‚ÍƒZƒpƒŒ[ƒ^‚É‚àƒ}ƒbƒ`‚·‚é.
- * ¦unDonut‚Ìƒ\[ƒX‚æ‚èƒRƒsƒy‰ü‘¢.
- *   ‚»‚ÌŒ³‚Íhttp://www.hidecnet.ne.jp/~sinzan/tips/main.htm‚ç‚µ‚¢‚ªƒŠƒ“ƒNØ.
- *  @param ptn  ƒpƒ^[ƒ“(*?w’è‰Â”\)
- *  @param tgt  ƒ^[ƒQƒbƒg•¶š—ñ.
+/** ?,* ã®ã¿ã®(dos/winãª)ãƒ¯ã‚¤ãƒ«ãƒ‰ã‚«ãƒ¼ãƒ‰æ–‡å­—åˆ—æ¯”è¼ƒ.
+ * *,? ã¯ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã«ã¯ãƒãƒƒãƒã—ãªã„.
+ * ãŸã ã—æ‹¡å¼µã—ã¦ ** ã¯ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã«ã‚‚ãƒãƒƒãƒã™ã‚‹.
+ * â€»unDonutã®ã‚½ãƒ¼ã‚¹ã‚ˆã‚Šã‚³ãƒ”ãƒšæ”¹é€ .
+ *   ãã®å…ƒã¯http://www.hidecnet.ne.jp/~sinzan/tips/main.htmã‚‰ã—ã„ãŒãƒªãƒ³ã‚¯åˆ‡.
+ *  @param ptn  ãƒ‘ã‚¿ãƒ¼ãƒ³(*?æŒ‡å®šå¯èƒ½)
+ *  @param tgt  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ–‡å­—åˆ—.
  */
 FKS_LIB_DECL int fks_fnameMatchWildCard(const FKS_FNAME_CHAR* ptn, const FKS_FNAME_CHAR* tgt)
 {
     unsigned                tc;
     const FKS_FNAME_CHAR*   tgt2 = tgt;
-    FKS_FNAME_GET_C(tc, tgt2);  // 1šæ“¾& tgtƒ|ƒCƒ“ƒ^XV.
+    FKS_FNAME_GET_C(tc, tgt2);  // 1å­—å–å¾—& tgtãƒã‚¤ãƒ³ã‚¿æ›´æ–°.
     switch (*ptn) {
     case FKS_FNAME_C('\0'):
         return tc == FKS_FNAME_C('\0');
@@ -1060,14 +1062,14 @@ FKS_LIB_DECL int fks_fnameMatchWildCard(const FKS_FNAME_CHAR* ptn, const FKS_FNA
         return tc && !fks_fnameIsSep(tc) && fks_fnameMatchWildCard( ptn+1, tgt2 );
 
     case FKS_FNAME_C('*'):
-        if (ptn[1] == FKS_FNAME_C('*')) // ** ‚È‚çƒZƒpƒŒ[ƒ^‚É‚àƒ}ƒbƒ`.
+        if (ptn[1] == FKS_FNAME_C('*')) // ** ãªã‚‰ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã«ã‚‚ãƒãƒƒãƒ.
             return fks_fnameMatchWildCard(ptn+2, tgt) || (tc && fks_fnameMatchWildCard( ptn, tgt2 ));
         return fks_fnameMatchWildCard(ptn+1, tgt) || (tc && !fks_fnameIsSep(tc) && fks_fnameMatchWildCard( ptn, tgt2 ));
 
     default:
         {
             unsigned pc;
-            FKS_FNAME_GET_C(pc, ptn);   // 1šæ“¾& ptnƒ|ƒCƒ“ƒ^XV.
+            FKS_FNAME_GET_C(pc, ptn);   // 1å­—å–å¾—& ptnãƒã‚¤ãƒ³ã‚¿æ›´æ–°.
             return (pc == tc) && fks_fnameMatchWildCard(ptn, tgt2);
         }
     }
@@ -1085,7 +1087,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePath(FKS_FNAME_CHAR dst[], unsi
 }
 
 
-/** ‘Š‘ÎƒpƒX¶¬. ƒfƒBƒŒƒNƒgƒŠƒZƒpƒŒ[ƒ^‚ğ\\‚É‚µ‚Ä•Ô‚·ƒo[ƒWƒ‡ƒ“.
+/** ç›¸å¯¾ãƒ‘ã‚¹ç”Ÿæˆ. ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã‚’\\ã«ã—ã¦è¿”ã™ãƒãƒ¼ã‚¸ãƒ§ãƒ³.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathBS(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR* path, const FKS_FNAME_CHAR* currentDir)
 {
@@ -1095,15 +1097,15 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathBS(FKS_FNAME_CHAR dst[], un
 }
 
 
-/** currentDir‚©‚ç‚Ì‘Š‘ÎƒpƒX¶¬.
- *  currentDir ‚Íâ‘ÎƒpƒX‚Å‚ ‚é‚±‚Æ. ‚»‚¤‚Å‚È‚¢ê‡‚Ì‹““®‚Í•s’è.
- *  '\'•¶š‘Îô‚ÅAƒZƒpƒŒ[ƒ^‚Í'/'‚É’u‚«Š·‚Ä‚¢‚é.
- *  ƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚©‚çn‚Ü‚éê‡A"./"‚Í‚Â‚¯‚È‚¢.
+/** currentDirã‹ã‚‰ã®ç›¸å¯¾ãƒ‘ã‚¹ç”Ÿæˆ.
+ *  currentDir ã¯çµ¶å¯¾ãƒ‘ã‚¹ã§ã‚ã‚‹ã“ã¨. ãã†ã§ãªã„å ´åˆã®æŒ™å‹•ã¯ä¸å®š.
+ *  '\'æ–‡å­—å¯¾ç­–ã§ã€ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã¯'/'ã«ç½®ãæ›ã¦ã„ã‚‹.
+ *  ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‹ã‚‰å§‹ã¾ã‚‹å ´åˆã€"./"ã¯ã¤ã‘ãªã„.
  */
 FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathSL(FKS_FNAME_CHAR dst[], unsigned size, const FKS_FNAME_CHAR* path, const FKS_FNAME_CHAR* currentDir)
 {
-    enum { CHECK_MAX_PATH = sizeof(char[FKS_FNAME_MAX_PATH >= 16 ? 1 : -1]) };  // ƒRƒ“ƒpƒCƒ‹‚ÌƒTƒCƒYƒ`ƒFƒbƒN.
-    enum { CHECK_MAX_URL  = sizeof(char[FKS_FNAME_MAX_URL  >= 16 ? 1 : -1]) };  // ƒRƒ“ƒpƒCƒ‹‚ÌƒTƒCƒYƒ`ƒFƒbƒN.
+    enum { CHECK_MAX_PATH = sizeof(char[FKS_FNAME_MAX_PATH >= 16 ? 1 : -1]) };  // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã®ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯.
+    enum { CHECK_MAX_URL  = sizeof(char[FKS_FNAME_MAX_URL  >= 16 ? 1 : -1]) };  // ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ™‚ã®ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯.
     FKS_FNAME_CHAR      curDir  [ FKS_FNAME_MAX_URL + 1 ];
     FKS_FNAME_CHAR      fullName[ FKS_FNAME_MAX_URL + 1 ];
     FKS_FNAME_CHAR*     cp;
@@ -1116,7 +1118,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathSL(FKS_FNAME_CHAR dst[], un
     if (dst == 0 || size <= 2 || path == 0)
         return 0;
 
-    // ‚Ü‚¸AƒJƒŒƒ“ƒgƒfƒBƒŒƒNƒgƒŠ‚ğƒtƒ‹ƒpƒX‰»(/) & ÅŒã‚É/‚ğ•t‰Á.
+    // ã¾ãšã€ã‚«ãƒ¬ãƒ³ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ•ãƒ«ãƒ‘ã‚¹åŒ–(/) & æœ€å¾Œã«/ã‚’ä»˜åŠ .
     assert(fks_fnameIsAbs(currentDir));
     fks_fnameFullpathSL(curDir, FKS_FNAME_MAX_URL, currentDir, FKS_FNAME_C("/"));
     cp = fks_fnameCheckLastSep(curDir);
@@ -1128,14 +1130,14 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathSL(FKS_FNAME_CHAR dst[], un
         }
     }
 
-    // ‘ÎÛ‚ğ path ‚ğƒtƒ‹ƒpƒX‰». \\‚Í–Ê“|‚È‚Ì‚Å/‰»‚µ‚½ó‘Ô.
+    // å¯¾è±¡ã‚’ path ã‚’ãƒ•ãƒ«ãƒ‘ã‚¹åŒ–. \\ã¯é¢å€’ãªã®ã§/åŒ–ã—ãŸçŠ¶æ…‹.
     fks_fnameFullpathSL(fullName, FKS_FNAME_MAX_URL, path, curDir);
 
-    // ƒ}ƒbƒ`‚µ‚Ä‚¢‚éƒfƒBƒŒƒNƒgƒŠ•”•ª‚ğƒXƒLƒbƒv.
+    // ãƒãƒƒãƒã—ã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªéƒ¨åˆ†ã‚’ã‚¹ã‚­ãƒƒãƒ—.
     cp    = fks_fnameSkipDriveRoot(curDir);
     fp    = fks_fnameSkipDriveRoot(fullName);
 
-    // ƒhƒ‰ƒCƒu–¼‚ªˆá‚Á‚Ä‚¢‚½‚ç‘Š‘ÎƒpƒX‰»‚µ‚È‚¢.
+    // ãƒ‰ãƒ©ã‚¤ãƒ–åãŒé•ã£ã¦ã„ãŸã‚‰ç›¸å¯¾ãƒ‘ã‚¹åŒ–ã—ãªã„.
     cl    = cp - curDir;
     fl    = fp - fullName;
     if (cl != fl || fks_fnameNCmp(curDir, fullName, fl) != 0) {
@@ -1143,7 +1145,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathSL(FKS_FNAME_CHAR dst[], un
         return dst;
     }
 
-    // “¯‚¶•”•ª‚ğƒ`ƒFƒbƒN.
+    // åŒã˜éƒ¨åˆ†ã‚’ãƒã‚§ãƒƒã‚¯.
     cpSav = cp;
     while (*cp && *fp) {
         unsigned cc;
@@ -1159,7 +1161,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathSL(FKS_FNAME_CHAR dst[], un
     fp      = fp - (cp - cpSav);
     cp      = cpSav;
 
-    // ƒJƒŒƒ“ƒgˆÊ’u‚©‚çã‚Ö‚ÌˆÚ“®”•ª../‚ğ¶¬.
+    // ã‚«ãƒ¬ãƒ³ãƒˆä½ç½®ã‹ã‚‰ä¸Šã¸ã®ç§»å‹•æ•°åˆ†../ã‚’ç”Ÿæˆ.
     {
         FKS_FNAME_CHAR* d = dst;
         FKS_FNAME_CHAR* e = dst + size - 1;
@@ -1174,7 +1176,7 @@ FKS_LIB_DECL FKS_FNAME_CHAR*    fks_fnameRelativePathSL(FKS_FNAME_CHAR dst[], un
         *d = FKS_FNAME_C('\0');
     }
 
-    // ƒJƒŒƒ“ƒgˆÊ’uˆÈ‰º‚Ì•”•ª‚ğƒRƒs[
+    // ã‚«ãƒ¬ãƒ³ãƒˆä½ç½®ä»¥ä¸‹ã®éƒ¨åˆ†ã‚’ã‚³ãƒ”ãƒ¼
     fks_fnameCat(dst, size, fp);
 
     return dst;
