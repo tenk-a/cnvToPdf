@@ -3,21 +3,35 @@
  *  @brief  image(jpg) to pdf
  *  @author tenka@6809.net
  */
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <algorithm>
-#include <assert.h>
+#include <cassert>
+#include <iostream>
+#include <fstream>
+#include <filesystem>
 #include "ExArgv.h"
 #include "fks_fname.h"
-#include "jpgFileToPdf.hpp"
+#include "JpgFileToPdf.hpp"
 #if defined(_WIN32)
 #include <windows.h>
-#include <filesystem>
 #endif
+
+#ifdef _MSC_VER
+ #define STR_CASE_CMP(l,r)		_stricmp((l),(r))
+ #define STR_N_CASE_CMP(l,r,n)	_strnicmp((l),(r),(n))
+#else
+ #define STR_CASE_CMP(l,r)		strcasecmp((l),(r))
+ #define STR_N_CASE_CMP(l,r,n)	strncasecmp((l),(r),(n))
+#endif
+
+using namespace std;
+namespace fs = std::filesystem;
 
 class App {
 public:
     typedef std::vector<std::string>  VecStr;
+	enum Er_t { Ok = 0, Er = 1 };
 
     App()
         : firstNameToTitle_(true)
@@ -25,7 +39,7 @@ public:
     {
     }
 
-    int usage() {
+    Er_t usage() {
         printf("jpg2pdf [-opts] jpgfile(s)...    // v0.1c  " __DATE__ " by tenk*\n");
         printf(
             "opts:\n"
@@ -49,11 +63,11 @@ public:
             "      --page-layout-two-page-right     5:見開き片頁開始\n"
             "  (*)付はデフォルト指定済\n"
             );
-        return 1;
+        return Er;
     }
 
 
-    int main(int argc, char *argv[]) {
+    Er_t main(int argc, char *argv[]) {
         if (argc < 2)
             return usage();
 
@@ -64,7 +78,7 @@ public:
         for (int i = 1; i < argc; ++i) {
             char* p = argv[i];
             if (*p == '-') {
-                int rc = scanOpts(p);
+                Er_t rc = scanOpts(p);
                 if (rc)
                     return rc;
             } else {
@@ -73,7 +87,7 @@ public:
         }
 
         if (jpgfiles.empty())
-            return 0;
+            return Ok;
 
         if (firstNameToTitle_ && conv_opts_.title.empty()) {
             std::string dir = getPathToDir(jpgfiles[0].c_str());
@@ -99,7 +113,7 @@ public:
         std::sort(jpgfiles.begin(), jpgfiles.end(), FnameCmp(digitCmp_));
         //for (int i = 0; i < jpgfiles.size(); ++i) printf("%s\n", jpgfiles[i].c_str());
 
-        return conv.run(jpgfiles, outname_.c_str(), conv_opts_) == false;
+        return Er_t(conv.run(jpgfiles, outname_.c_str(), conv_opts_) == false);
     }
 
 
@@ -116,122 +130,74 @@ public:
     };
 
 private:
-    int scanOpts(char* arg) {
+    Er_t scanOpts(char* arg) {
         char* p = arg;
         assert(p && *p == '-');
-        ++p;
-        if (*p == '-') {
-            ++p;
-            std::string para = p;
-            if (paramEquLong(p, "title", p)) {
-                if (!*p) goto OPT_ERR;
-                conv_opts_.title = p;
-                firstNameToTitle_ = false;
-            } else if (paramEquLong(p, "author", p)) {
-                if (!*p) goto OPT_ERR;
-                conv_opts_.author = p;
-                firstNameToTitle_ = false;
-            } else if (paramEquLong(p, "title-author", p)) {
-                if (!*p) goto OPT_ERR;
-                titleAuthor_ = p;
-                getTitleAuthor(p, conv_opts_.title, conv_opts_.author);
-                firstNameToTitle_ = false;
-            } else if (paramEquLong(p, "r2l", p)) {
-                conv_opts_.r2l = true;
-            } else if (paramEquLong(p, "l2r", p)) {
-                conv_opts_.r2l = false;
-            } else if (paramEquLong(p, "digit", p)) {
-                digitCmp_ = (*p != '-');
-            } else if (paramEquLong(p, "outline", p)) {
-                conv_opts_.outline = (*p != '-');
-            } else if (paramEquLong(p, "output", p)) {
-                if (!*p) goto OPT_ERR;
-                outname_ = p;
-            } else if (paramEquLong(p, "out-dir", p)) {
-                if (!*p) goto OPT_ERR;
-                fks_fnameDelLastSep(p);
-                dstdir_ = p;
-            } else if (para == "page-layout-single") {
-                conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_SINGLE;
-            } else if (para == "page-layout-one-column") {
-                conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_ONE_COLUMN;
-            } else if (para == "page-layout-two-column-left") {
-                conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_COLUMN_LEFT;
-            } else if (para == "page-layout-two-column-right") {
-                conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_COLUMN_RIGHT;
-            } else if (para == "page-layout-two-page-left") {
-                conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_LEFT;
-            } else if (para == "page-layout-two-page-right") {
-                conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_RIGHT;
+		if (checkOpt(p, "-output") || checkOpt(p, "-o")) {
+			if (!*p) return optErr(arg);
+            outname_ = p;
+        } else if (checkOpt(p, "-out-dir") || checkOpt(p, "-d")) {
+            if (!*p) return optErr(arg);
+            fks_fnameDelLastSep(p);
+            dstdir_ = p;
+        } else if (checkOpt(p, "-title") || checkOpt(p, "-t")) {
+            if (!*p) return optErr(arg);
+            conv_opts_.title = p;
+            firstNameToTitle_ = false;
+		} else if (checkOpt(p, "-author") || checkOpt(p, "-a")) {
+            if (!*p) return optErr(arg);
+            conv_opts_.author = p;
+            firstNameToTitle_ = false;
+        } else if (checkOpt(p, "-title-author") || checkOpt(p, "-T")) {
+            if (!*p) return optErr(arg);
+            titleAuthor_ = p;
+            getTitleAuthor(p, conv_opts_.title, conv_opts_.author);
+            firstNameToTitle_ = false;
+        } else if (checkOpt(p, "-r2l")) {
+            conv_opts_.r2l = true;
+        } else if (checkOpt(p, "-l2r")) {
+            conv_opts_.r2l = false;
+        } else if (checkOpt(p, "-digit")) {
+            digitCmp_ = (*p != '-');
+        } else if (checkOpt(p, "-outline")) {
+            conv_opts_.outline = (*p != '-');
+        } else if (checkOpt(p, "-m")) {
+            if (!*p) return optErr(arg);
+                _HPDF_PageLayout mode = _HPDF_PageLayout(strtoul(p, NULL, 10));
+            if (HPDF_PAGE_LAYOUT_SINGLE <= mode && mode < HPDF_PAGE_LAYOUT_EOF) {
+                conv_opts_.layout_mode = _HPDF_PageLayout(mode);
+            } else {
+                fprintf(stderr, "option %s : out of range", arg);
+                return Er;
             }
-        } else {
-            switch (*p++) {
-            case 'o':
-                if (!*p) goto OPT_ERR;
-                outname_ = p;
-                break;
-            case 'd':
-                if (!*p) goto OPT_ERR;
-                fks_fnameDelLastSep(p);
-                dstdir_ = p;
-                break;
-            case 't':
-                if (!*p) goto OPT_ERR;
-                conv_opts_.title = p;
-                firstNameToTitle_ = false;
-                break;
-            case 'a':
-                if (!*p) goto OPT_ERR;
-                conv_opts_.author = p;
-                firstNameToTitle_ = false;
-                break;
-            case 'T':
-                if (!*p) goto OPT_ERR;
-                titleAuthor_ = p;
-                getTitleAuthor(p, conv_opts_.title, conv_opts_.author);
-                firstNameToTitle_ = false;
-                break;
-            case 'r':
-                conv_opts_.r2l = (*p != '-');
-                break;
-            case 'm':
-                {
-                    if (!*p) goto OPT_ERR;
-                        _HPDF_PageLayout mode = _HPDF_PageLayout(strtoul(p, NULL, 10));
-                    if (HPDF_PAGE_LAYOUT_SINGLE <= mode && mode < HPDF_PAGE_LAYOUT_EOF) {
-                        conv_opts_.layout_mode = _HPDF_PageLayout(mode);
-                    } else {
-                        fprintf(stderr, "option %s : out of range", arg);
-                    }
-                    break;
-                }
-            case '?':
-            case 'h':
-                return usage();
-            default:
-     OPT_ERR:
-                fprintf(stderr, "Incorrect option: %s", arg);
-                return 1;
-            }
+        } else if (checkOpt(p, "-page-layout-single")) {
+            conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_SINGLE;
+        } else if (checkOpt(p, "-page-layout-one-column")) {
+            conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_ONE_COLUMN;
+        } else if (checkOpt(p, "-page-layout-two-column-left")) {
+            conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_COLUMN_LEFT;
+        } else if (checkOpt(p, "-page-layout-two-column-right")) {
+            conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_COLUMN_RIGHT;
+        } else if (checkOpt(p, "-page-layout-two-page-left")) {
+            conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_LEFT;
+        } else if (checkOpt(p, "-page-layout-two-page-right")) {
+            conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_RIGHT;
+        } else if (checkOpt(p, "-r")) {
+            conv_opts_.r2l = (*p != '-');
+        } else if (checkOpt(p, "-h") || checkOpt(p, "-?")) {
+            return usage();
+		} else {
+            return optErr(arg);
         }
-        return 0;
+        return Ok;
     }
 
-    bool paramEquLong(char const* s, char const* t, char* &result_s) {
-        return paramEquLong(s, t, (char const* &)result_s);
-    }
+	static Er_t optErr(char const* arg) {
+        fprintf(stderr, "Incorrect option: %s", arg);
+		return Er;
+	}
 
-    bool paramEquLong(char const* s, char const* t, char const* &result_s) {
-        size_t tlen = strlen(t);
-        if (strncmp(s, t, tlen) == 0) {
-            s += tlen;
-            result_s = s;
-            return true;
-        }
-        return false;
-    }
-
-    void getTitleAuthor(char const* s, std::string& rTitle, std::string& rAuthor) {
+    static void getTitleAuthor(char const* s, std::string& rTitle, std::string& rAuthor) {
         if (*s == '[') {
             char const* t = strchr(s+1, ']');
             if (t) {
@@ -255,7 +221,7 @@ private:
         rTitle = s;
     }
 
-    std::string getPathToDir(char const* src) {
+    static std::string getPathToDir(char const* src) {
         char const* base = fks_fnameBaseName(src);
         if (src < base) {
             --base;
@@ -266,6 +232,206 @@ private:
         }
         return std::string();
     }
+
+	static bool strEqu(char const* l, char const* r) {
+		if (!l || !r)
+			return l == r;
+		return STR_CASE_CMP(l, r) == 0;
+	}
+
+	static bool strStartsWith(char const* src, char const* last) {
+		if (!src || !last)
+			return false;
+		auto sl = strlen(src);
+		auto ll = strlen(last);
+		if (sl < ll)
+			return false;
+		return STR_N_CASE_CMP(src, last, ll) == 0;
+	}
+	static bool strStartsWith(string const& src, char const* last) {
+		return strStartsWith(src.c_str(), last);
+	}
+
+	static bool strEndsWith(char const* src, char const* last) {
+		if (!src || !last)
+			return false;
+		auto sl = strlen(src);
+		auto ll = strlen(last);
+		if (sl < ll)
+			return false;
+		auto s2 = src + (sl - ll);
+		return STR_CASE_CMP(s2, last) == 0;
+	}
+	static bool strEndsWith(string const& src, char const* last) {
+		return strEndsWith(src.c_str(), last);
+	}
+
+	static char const* fileBaseName(char const* s) {
+		char const* r1 = strrchr(s, '/');
+		char const* r2 = strrchr(s, '\\');
+		char const* r  = r1;
+		if (r1 < r2)
+			r = r2;
+		if (r)
+			++r;
+		else
+			r = s;
+		return r;
+	}
+
+	static char const* fnameExt(char const* pathname) {
+		auto b        = fileBaseName(pathname);
+		char const* r = strrchr(b, '.');
+		if (r)
+			; //++r;
+		else
+			r = "";
+		return r;
+	}
+
+	static string getPathDir(char const* pathname) {
+		auto e = fileBaseName(pathname);
+		if (e <= pathname)
+			return string();
+		--e;
+		return string(pathname, e);
+	}
+
+	static string fnameRemoveExt(char const* pathname) {
+		auto b        = fileBaseName(pathname);
+		char const* r = strrchr(b, '.');
+		if (r) {
+			return string(pathname).substr(0, r - pathname);
+		}
+		else
+			return string(pathname);
+	}
+
+	static uintmax_t getFileBytes(fs::path fname) {
+		if (fs::exists(fname))
+			return  fs::file_size(fname);
+		else
+			return 0;
+	}
+
+	static string removeLastDirSep(string dir) {
+		string d = dir;
+		if (d.size() && (d.back() == '/' || d.back() == '\\'))
+			d.pop_back();
+		return d;
+	}
+
+	static string toMsSep(string dpath) {
+		for (auto& it : dpath) {
+			if (it == '/')
+				it = '\\';
+		}
+		return dpath;
+	}
+
+	static string addDq(string const& s) {
+		if (!s.empty() && s[0] == '"')
+			return s;
+		return '"' + s + '"';
+	}
+
+	static string subDq(string const& arg) {
+		string s = arg;
+		if (s.empty() || s.front() != '"')
+			return s;
+		if (s.back() == '"')
+			s.pop_back();
+		s.erase(s.begin());
+		for (auto& it : s) {
+			if (it == '\n' || it == '\t' || it == ',')
+				it = ' ';
+		}
+		return s;
+	}
+
+	static bool strContain(string& s, string_view key) {
+	   return s.find(key) != string::npos;
+	}
+
+	static bool strContain(char const* s, char const* key) {
+	   return strstr(s, key) != nullptr;
+	}
+
+	static string trim(string_view str) {
+		auto b = (char8_t const*)str.data();
+		auto e = b + str.size();
+		auto p = b;
+		while (*p && *p < 0x20 && p < e)
+			++p;
+		if (p < e) {
+			auto q = e-1;
+			while (p < q && *q && *q < ' ')
+				--q;
+
+			if (p < q)
+				return string((char const*)p, q+1 - p);
+		}
+		return string();
+	}
+
+	static bool startsWithGetLen(string const& label, char const* name, size_t& n) {
+		if (label.starts_with(name)) {
+			n = strlen(name);
+			return true;
+		}
+		return false;
+	}
+
+	static bool checkOpt(char*& arg, char const* opt) {
+		if (strStartsWith(arg, opt)) {
+			arg += strlen(opt);
+			if (*arg == '=')
+				++arg;
+			return true;
+		}
+		return false;
+	}
+
+	static void getResFile(char const* fname, list<string>& args) {
+		ifstream ifs(fs::path((char8_t const*)fname), std::ios::in);
+		if (ifs.is_open()) {
+			while (!ifs.eof()) {
+				string line;
+				if (getline(ifs, line)) {
+					line = trim(line);
+					if (line.empty() || line[0] == '#')
+						continue;
+					args.emplace_back(line);
+				}
+			}
+			if (!args.empty() && args.back().empty()) {
+				args.pop_back();
+			}
+		}
+	}
+
+	static bool loadFile(fs::path fname, vector<uint8_t>& dst, size_t sz = 0) {
+		if (sz == 0)
+			sz = getFileBytes(fname);
+		if (sz == 0 || sz == size_t(-1ll))
+			return false;
+	 #if 0
+		FILE* fp = _wfopen(fname.wstring().c_str(), L"rb");
+		if (fp == nullptr)
+			return false;
+		dst.resize(sz);
+		auto rsz = fread(dst.data(), 1, sz, fp);
+		fclose(fp);
+		return sz == size_t(rsz);
+	 #else
+		ifstream ist(fname.c_str(), std::ios::binary | std::ios::in);
+		if (!ist.is_open())
+			return false;
+		dst.resize(sz);
+		ist.read((char*)dst.data(), sz);
+		return true;
+	 #endif
+	}
 
 private:
     JpgFileToPdf::Opts  conv_opts_;
@@ -284,19 +450,18 @@ int main(int argc, char *argv[]) {
 }
 #else
 int wmain(int argc, wchar_t *argv[]) {
-    namespace fs = std::filesystem;
-    auto savCP = GetConsoleOutputCP();
-    SetConsoleOutputCP(65001);
+	namespace fs = std::filesystem;
+	auto savCP = GetConsoleOutputCP();
+	SetConsoleOutputCP(65001);
     ExArgv_conv(&argc, &argv);
-    std::vector<char*> argv2(argc);
+    std::vector<char*>       argv2(argc);
     std::vector<std::string> args;
     args.reserve(argc);
 	for (std::size_t i = 0; i < argc; ++i) {
 		args.emplace_back((char const*)fs::path(argv[i]).u8string().c_str());
 		argv2[i] = const_cast<char*>(args.back().c_str());
 	}
-	App	app;
-	int rc = app.main(argc, &argv2[0]);
+	int rc = App().main(argc, &argv2[0]);
 	SetConsoleOutputCP(savCP);
 	return rc;
 }
