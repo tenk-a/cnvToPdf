@@ -9,7 +9,7 @@
 #include <assert.h>
 #include "ExArgv.h"
 #include "fks_fname.h"
-#include "JpgFileToPdf.hpp"
+#include "jpgFileToPdf.hpp"
 #if defined(_WIN32)
 #include <windows.h>
 #include <filesystem>
