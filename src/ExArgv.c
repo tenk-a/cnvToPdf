@@ -151,6 +151,7 @@
 // char,wchar_t 切り替えの辻褄合わせ関係.
 
 #ifdef UNICODE
+#undef  _pgmptr
 #define _pgmptr         _wpgmptr
 #define T(x)            L##x
 typedef wchar_t         char_t;
@@ -390,7 +391,7 @@ static int ExArgv_forCmdLine1(const char_t* pCmdLine, int* pArgc, char_t*** pppA
 
 // ===========================================================================
 
-#if (defined _WINDOWS) == 0 && (defined EXARGV_USE_SETARGV) == 0
+#if (defined _WINDOWS) == 0 || (defined EXARGV_USE_SETARGV) == 0
 
 /** argc,argv をレスポンスファイルやワイルドカード展開して、argc, argvを更新して返す.
  *  @param  pArgc       argcのアドレス.(argvの数)
@@ -431,7 +432,7 @@ void ExArgv_conv(int* pArgc, char_t*** pppArgv)
   #if !EXARGV_USE_CONFIG && !defined(EXARGV_ENVNAME) && !defined(EXARGV_TOSLASH) && !defined(EXARGV_TOBACKSLASH)
    #if !EXARGV_USE_WC && !EXARGV_USE_RESFILE
     return;     // ほぼ変換無し...
-   #else
+   #elif defined EXARGV_USE_CHK_CHR
     if (ExArgv_checkWcResfile(argc, ppArgv) == 0)   // 現状のargc,argvを弄る必要があるか?
         return;
    #endif
