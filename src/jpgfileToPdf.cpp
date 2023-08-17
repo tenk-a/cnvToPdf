@@ -58,9 +58,13 @@ bool JpgFileToPdf::run(std::vector<std::string> const& jpgfiles, char const* out
     is_jap_ = opts.jap || hasOver0x80(opts.title.c_str()) || hasOver0x80(opts.author.c_str());
     if (is_jap_) {      // 日本語扱う場合
         HPDF_UseJPEncodings(pdf);
-        HPDF_UseJPFonts(pdf);
-        HPDF_SetCurrentEncoder(pdf, "90msp-RKSJ-H");    // カレントのエンコーダ設定しないと著者名とかタイトルとか文字化けする
+        //HPDF_UseJPFonts(pdf);
+        //HPDF_SetCurrentEncoder(pdf, "90msp-RKSJ-H");    // SJIS にする場合. カレントのエンコーダ設定しないと著者名とかタイトルとか文字化けする
     }
+    {
+		HPDF_UseUTFEncodings(pdf);
+    	HPDF_SetCurrentEncoder(pdf, "UTF-8");
+	}
 
     HPDF_Outline root = NULL;
     if (opts.outline) {         // アウトラインつける場合
@@ -129,7 +133,8 @@ bool JpgFileToPdf::addJpgPage(HPDF_Doc pdf, char const* jpgname, HPDF_Outline ro
 
     if (root) {
         if (is_jap_) {
-            HPDF_Font font = HPDF_GetFont(pdf, "MS-PGothic", "90msp-RKSJ-H");
+            //HPDF_Font font = HPDF_GetFont(pdf, "MS-PGothic", "90msp-RKSJ-H");
+            HPDF_Font font = HPDF_GetFont(pdf, "MS-PGothic", "UTF-8");
             if (font)
                 HPDF_Page_SetFontAndSize(page, font, 9);
         }

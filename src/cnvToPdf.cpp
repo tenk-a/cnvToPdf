@@ -7,10 +7,13 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <assert.h>
-#include <ExArgv.h>
-#include <fks_fname.h>
+#include "ExArgv.h"
+#include "fks_fname.h"
 #include "JpgFileToPdf.hpp"
-
+#if defined(_WIN32)
+#include <windows.h>
+#include <filesystem>
+#endif
 
 class App {
 public:
@@ -37,7 +40,7 @@ public:
             "  -a  --author\"著者\"        著者指定\n"
             "  -T  --author-title\"著者 - タイトル\"  ' - 'を挟んで著者とタイトルを指定\n"
             "  -T  --author-title\"[著者] タイトル\"  著者を[]で囲んで著者とタイトルを指定\n"
-            "  -mN                                  頁の開き方指定(0〜5).下記6つに同じ\n"
+            "  -mN                                  頁の開き方指定(0～5).下記6つに同じ\n"
             "      --page-layout-single             0:単頁(*)\n"
             "      --page-layout-one-column         1:単頁スクロール\n"
             "      --page-layout-two-column-left    2:見開きスクロール両頁開始\n"
@@ -53,8 +56,6 @@ public:
     int main(int argc, char *argv[]) {
         if (argc < 2)
             return usage();
-
-        ExArgv_conv(&argc, &argv);
 
         VecStr          jpgfiles;
         JpgFileToPdf    conv;
@@ -276,6 +277,27 @@ private:
 };
 
 
+#if !defined(_WIN32)
 int main(int argc, char *argv[]) {
+    ExArgv_conv(&argc, &argv);
     return App().main(argc, argv);
 }
+#else
+int wmain(int argc, wchar_t *argv[]) {
+    namespace fs = std::filesystem;
+    auto savCP = GetConsoleOutputCP();
+    SetConsoleOutputCP(65001);
+    ExArgv_conv(&argc, &argv);
+    std::vector<char*> argv2(argc);
+    std::vector<std::string> args;
+    args.reserve(argc);
+	for (std::size_t i = 0; i < argc; ++i) {
+		args.emplace_back((char const*)fs::path(argv[i]).u8string().c_str());
+		argv2[i] = const_cast<char*>(args.back().c_str());
+	}
+	App	app;
+	int rc = app.main(argc, &argv2[0]);
+	SetConsoleOutputCP(savCP);
+	return rc;
+}
+#endif
