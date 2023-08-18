@@ -21,15 +21,9 @@
 
 #include "fks_fname.h"
 
-#ifdef __cplusplus
-#include <cstddef>
-#include <cstdlib>
-#include <cstring>
-using namespace std;
-#else
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#endif
 #ifndef assert
 #include <assert.h>
 #endif

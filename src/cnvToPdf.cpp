@@ -3,6 +3,9 @@
  *  @brief  image(jpg) to pdf
  *  @author tenka@6809.net
  */
+#if defined(_WIN32)
+#include <windows.h>
+#endif
 #include <cstdio>
 #include <cstdlib>
 #include <algorithm>
@@ -13,9 +16,6 @@
 #include "ExArgv.h"
 #include "fks_fname.h"
 #include "JpgFileToPdf.hpp"
-#if defined(_WIN32)
-#include <windows.h>
-#endif
 
 #ifdef _MSC_VER
  #define STR_CASE_CMP(l,r)		_stricmp((l),(r))
@@ -25,7 +25,7 @@
  #define STR_N_CASE_CMP(l,r,n)	strncasecmp((l),(r),(n))
 #endif
 
-using namespace std;
+//using namespace std;
 namespace fs = std::filesystem;
 
 class App {
@@ -248,27 +248,27 @@ private:
 			return false;
 		return STR_N_CASE_CMP(src, last, ll) == 0;
 	}
-	static bool strStartsWith(string const& src, char const* last) {
+	static bool strStartsWith(std::string const& src, char const* last) {
 		return strStartsWith(src.c_str(), last);
 	}
 
 	static bool strEndsWith(char const* src, char const* last) {
 		if (!src || !last)
 			return false;
-		auto sl = strlen(src);
-		auto ll = strlen(last);
+		auto sl = std::strlen(src);
+		auto ll = std::strlen(last);
 		if (sl < ll)
 			return false;
 		auto s2 = src + (sl - ll);
 		return STR_CASE_CMP(s2, last) == 0;
 	}
-	static bool strEndsWith(string const& src, char const* last) {
+	static bool strEndsWith(std::string const& src, char const* last) {
 		return strEndsWith(src.c_str(), last);
 	}
 
 	static char const* fileBaseName(char const* s) {
-		char const* r1 = strrchr(s, '/');
-		char const* r2 = strrchr(s, '\\');
+		char const* r1 = std::strrchr(s, '/');
+		char const* r2 = std::strrchr(s, '\\');
 		char const* r  = r1;
 		if (r1 < r2)
 			r = r2;
@@ -281,7 +281,7 @@ private:
 
 	static char const* fnameExt(char const* pathname) {
 		auto b        = fileBaseName(pathname);
-		char const* r = strrchr(b, '.');
+		char const* r = std::strrchr(b, '.');
 		if (r)
 			; //++r;
 		else
@@ -289,22 +289,22 @@ private:
 		return r;
 	}
 
-	static string getPathDir(char const* pathname) {
+	static std::string getPathDir(char const* pathname) {
 		auto e = fileBaseName(pathname);
 		if (e <= pathname)
-			return string();
+			return std::string();
 		--e;
-		return string(pathname, e);
+		return std::string(pathname, e);
 	}
 
-	static string fnameRemoveExt(char const* pathname) {
+	static std::string fnameRemoveExt(char const* pathname) {
 		auto b        = fileBaseName(pathname);
-		char const* r = strrchr(b, '.');
+		char const* r = std::strrchr(b, '.');
 		if (r) {
-			return string(pathname).substr(0, r - pathname);
+			return std::string(pathname).substr(0, r - pathname);
 		}
 		else
-			return string(pathname);
+			return std::string(pathname);
 	}
 
 	static uintmax_t getFileBytes(fs::path fname) {
@@ -314,14 +314,14 @@ private:
 			return 0;
 	}
 
-	static string removeLastDirSep(string dir) {
-		string d = dir;
+	static std::string removeLastDirSep(std::string dir) {
+		std::string d = dir;
 		if (d.size() && (d.back() == '/' || d.back() == '\\'))
 			d.pop_back();
 		return d;
 	}
 
-	static string toMsSep(string dpath) {
+	static std::string toMsSep(std::string dpath) {
 		for (auto& it : dpath) {
 			if (it == '/')
 				it = '\\';
@@ -329,14 +329,14 @@ private:
 		return dpath;
 	}
 
-	static string addDq(string const& s) {
+	static std::string addDq(std::string const& s) {
 		if (!s.empty() && s[0] == '"')
 			return s;
 		return '"' + s + '"';
 	}
 
-	static string subDq(string const& arg) {
-		string s = arg;
+	static std::string subDq(std::string const& arg) {
+		std::string s = arg;
 		if (s.empty() || s.front() != '"')
 			return s;
 		if (s.back() == '"')
@@ -349,15 +349,15 @@ private:
 		return s;
 	}
 
-	static bool strContain(string& s, string_view key) {
-	   return s.find(key) != string::npos;
+	static bool strContain(std::string& s, std::string_view key) {
+	   return s.find(key) != std::string::npos;
 	}
 
 	static bool strContain(char const* s, char const* key) {
 	   return strstr(s, key) != nullptr;
 	}
 
-	static string trim(string_view str) {
+	static std::string trim(std::string_view str) {
 		auto b = (char8_t const*)str.data();
 		auto e = b + str.size();
 		auto p = b;
@@ -369,12 +369,12 @@ private:
 				--q;
 
 			if (p < q)
-				return string((char const*)p, q+1 - p);
+				return std::string((char const*)p, q+1 - p);
 		}
-		return string();
+		return std::string();
 	}
 
-	static bool startsWithGetLen(string const& label, char const* name, size_t& n) {
+	static bool startsWithGetLen(std::string const& label, char const* name, std::size_t& n) {
 		if (label.starts_with(name)) {
 			n = strlen(name);
 			return true;
@@ -392,11 +392,11 @@ private:
 		return false;
 	}
 
-	static void getResFile(char const* fname, list<string>& args) {
-		ifstream ifs(fs::path((char8_t const*)fname), std::ios::in);
+	static void getResFile(char const* fname, std::list<std::string>& args) {
+		std::ifstream ifs(fs::path((char8_t const*)fname), std::ios::in);
 		if (ifs.is_open()) {
 			while (!ifs.eof()) {
-				string line;
+				std::string line;
 				if (getline(ifs, line)) {
 					line = trim(line);
 					if (line.empty() || line[0] == '#')
@@ -410,10 +410,10 @@ private:
 		}
 	}
 
-	static bool loadFile(fs::path fname, vector<uint8_t>& dst, size_t sz = 0) {
+	static bool loadFile(fs::path fname, std::vector<std::uint8_t>& dst, std::size_t sz = 0) {
 		if (sz == 0)
 			sz = getFileBytes(fname);
-		if (sz == 0 || sz == size_t(-1ll))
+		if (sz == 0 || sz == std::size_t(-1ll))
 			return false;
 	 #if 0
 		FILE* fp = _wfopen(fname.wstring().c_str(), L"rb");
@@ -424,7 +424,7 @@ private:
 		fclose(fp);
 		return sz == size_t(rsz);
 	 #else
-		ifstream ist(fname.c_str(), std::ios::binary | std::ios::in);
+		std::ifstream ist(fname.c_str(), std::ios::binary | std::ios::in);
 		if (!ist.is_open())
 			return false;
 		dst.resize(sz);
