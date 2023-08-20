@@ -20,8 +20,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # vc ならソース＆charを UTF-8 で扱う指定.
 if(WIN32 AND MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUNICODE -U_WINDOWS")
-    add_compile_options(-utf-8)
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -utf-8 -DUNICODE -U_WINDOWS")
+    add_compile_options(-utf-8 -DUNICODE -U_WINDOWS)
 endif()
 
 # libharu を使う指定.
@@ -33,9 +33,7 @@ find_package(unofficial-libharu CONFIG REQUIRED)
 add_executable(${PROJECT_NAME}
 	src/cnvToPdf.cpp
 	src/jpgfileToPdf.cpp
-	src/stdafx.cpp
 	src/ExArgv.c
-	src/fks_fname.cpp
 )
 
 # ターゲット別のリンクに関する設定.
