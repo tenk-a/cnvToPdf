@@ -350,7 +350,7 @@ namespace misc {
 		if (ost.is_open()) {
 			std::size_t sz = (max_bytes && sz > max_bytes) ? max_bytes : src_bytes;
 			if (sz)
-				ost.write(src, sz);
+				ost.write(reinterpret_cast<char const*>(src), sz);
 			return !ost.bad();
 		}
 		return false;

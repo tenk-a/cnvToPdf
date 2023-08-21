@@ -14,7 +14,7 @@
 #include <fstream>
 #include <filesystem>
 #include "ExArgv.h"
-#include "JpgFileToPdf.hpp"
+#include "jpgFileToPdf.hpp"
 #include "misc.hpp"
 
 using namespace std;

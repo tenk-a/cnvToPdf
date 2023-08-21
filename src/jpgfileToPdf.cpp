@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <setjmp.h>
 #include <hpdf.h>
-#include "JpgFileToPdf.hpp"
+#include "jpgFileToPdf.hpp"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -139,7 +139,7 @@ bool JpgFileToPdf::addJpgPage(HPDF_Doc pdf, char const* jpgname, HPDF_Outline ro
                 HPDF_Page_SetFontAndSize(page, font, 9);
         }
         char str[130];  // 文字列化したint整数分には十分なサイズを指定.
-        sprintf(str, "%d", (int)page_count_);
+        snprintf(str, sizeof(str), "%d", (int)page_count_);
         HPDF_Outline     outline = HPDF_CreateOutline (pdf, root, str, NULL);
         HPDF_Destination dst = HPDF_Page_CreateDestination (page);
         HPDF_Destination_SetXYZ(dst, 0, HPDF_Page_GetHeight(page), 1);
