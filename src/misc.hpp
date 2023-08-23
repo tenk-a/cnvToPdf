@@ -165,7 +165,7 @@ namespace misc {
 			return -1;
 		std::ptrdiff_t cc   = llen - rlen;
 		std::size_t    maxl = (cc < 0) ? llen : rlen;
-		if (maxl > len) {
+		if (maxl >= len) {
 		    maxl = len;
 		    cc   = 0;
 		}
@@ -272,24 +272,22 @@ namespace misc {
 		return fnameDigCmp(l, strLen(l), r, strLen(r), len);
 	}
 
-	template<typename C> std::basic_string<C>
-	fnameRemoveLastDirSep(C const* dir, std::size_t len) {
-		std::basic_string<C> dst(dir, len);
-		if (dst.size() > 0) {
-			C c = dst.back();
-			if (c == '/' || c == '\\') {
-				dst.pop_back();
-			}
+	template<typename C> std::basic_string_view<C>
+	removeLastDirSep(C const* dir, std::size_t len) {
+		if (len > 0) {
+			C c = dir[len-1];
+			if (c == C('/') || c == C('\\'))
+				--len;
 		}
-		return dst;
+		return std::basic_string_view<C>(dir, len);
 	}
-	template<typename C> inline std::basic_string<C>
-	fnameRemoveLastDirSep(C const* dir) {
-		return fnameRemoveLastDirSep(dir, strLen(dir));
+	template<typename C> inline std::basic_string_view<C>
+	removeLastDirSep(C const* dir) {
+		return removeLastDirSep(dir, strLen(dir));
 	}
-	template<typename STR> inline std::basic_string<typename STR::value_type>
-	fnameRemoveLastDirSep(STR const& dir) {
-		return fnameRemoveLastDirSep(dir.data(), dir.size());
+	template<typename STR> inline std::basic_string_view<typename STR::value_type>
+	removeLastDirSep(STR const& dir) {
+		return removeLastDirSep(dir.data(), dir.size());
 	}
 
 }	// misc
@@ -307,6 +305,18 @@ namespace misc {
 	 	//return reinterpret_cast<std::string const&&>(fpath.u8string());
 	 #else
 	 	return fpath.string();
+	 #endif
+	}
+
+	//template<typename STR>
+	//inline std::filesystem::path strToPath(STR const& s) {
+	// 	return std::filesystem::path(s);
+	//}
+	inline std::filesystem::path strToPath(char const* s) {
+	 #if _WIN32
+	 	return std::filesystem::path((char8_t const*)s);
+	 #else
+	 	return std::filesystem::path(s);
 	 #endif
 	}
 

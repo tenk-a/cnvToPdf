@@ -40,7 +40,7 @@ public:
             "  -o  --output=\"FILE.pdf\"    出力するpdfファイル名\n"
             "                             指定無なら最初のjpgのディレクトリ名を-Tで採用\n"
             "  -d  --out-dir=\"DIR\"        --out指定のない場合の出力ディレクトリ名\n"
-            "      --digit[-]             ファイル名の数字列を数値として比較(*)  [- しない]\n"
+            "  -D  --digit[-]             ファイル名の数字列を数値として比較(*)  [- しない]\n"
             "  -r  --r2l                  右綴じ指定\n"
             "  -r- --l2r                  左綴じ指定(*)\n"
             "      --outline              アウトライン(頁番号一覧)を付加\n"
@@ -130,13 +130,17 @@ private:
     Er_t scanOpts(char* arg) {
         char* a = arg;
         assert(a && *a == '-');
-		if (checkOpt(a, "-output") || checkOpt(a, "-o")) {
+        if (checkOpt(a, "-outline")) {
+            conv_opts_.outline = (*a != '-');
+        } else if (checkOpt(a, "-output") || checkOpt(a, "-o")) {
 			if (!*a) return optErr(arg);
-            outname_ = a;
+            outname_ = strToPath(a);
+        } else if (checkOpt(a, "-digit") || checkOpt(a, "-D")) {
+            digitCmp_ = (*a != '-');
         } else if (checkOpt(a, "-out-dir") || checkOpt(a, "-d")) {
             if (!*a) return optErr(arg);
-            dstdir_ = fnameRemoveLastDirSep(a); //(std::string_view(a));
-        } else if (checkOpt(a, "-title-author") || checkOpt(a, "-ta")) {
+            dstdir_ = removeLastDirSep((char8_t*)a);
+        } else if (checkOpt(a, "-title-author") || checkOpt(a, "-T")) {
             if (!*a) return optErr(arg);
             titleAuthor_ = a;
             getTitleAuthor(titleAuthor_, conv_opts_.title, conv_opts_.author);
@@ -153,10 +157,8 @@ private:
             conv_opts_.r2l = true;
         } else if (checkOpt(a, "-l2r")) {
             conv_opts_.r2l = false;
-        } else if (checkOpt(a, "-digit")) {
-            digitCmp_ = (*a != '-');
-        } else if (checkOpt(a, "-outline")) {
-            conv_opts_.outline = (*a != '-');
+        } else if (checkOpt(a, "-r")) {
+            conv_opts_.r2l = (a[0] != '-');
         } else if (checkOpt(a, "-m")) {
             if (!*a) return optErr(arg);
                 _HPDF_PageLayout mode = _HPDF_PageLayout(strtoul(a, NULL, 10));
@@ -178,8 +180,6 @@ private:
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_LEFT;
         } else if (checkOpt(a, "-page-layout-two-page-right")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_RIGHT;
-        } else if (checkOpt(a, "-r")) {
-            conv_opts_.r2l = (a[0] != '-');
         } else if (checkOpt(a, "-h") || checkOpt(a, "-?")) {
             return usage();
 		} else {
