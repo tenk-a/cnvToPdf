@@ -25,3 +25,4 @@ output
 upload
 build
 .DS_Store
+*.pdf
