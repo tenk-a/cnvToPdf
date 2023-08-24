@@ -10,12 +10,12 @@ endif()
 
 project(cnvToPdf)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(WIN32 AND MSVC)
-    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -utf-8 -DUNICODE -U_WINDOWS")
-    add_compile_options(-utf-8 -DUNICODE -U_WINDOWS)
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -utf-8")
+    add_compile_options(-U_WINDOWS -DUNICODE -utf-8 -Zc:__cplusplus -Zc:rvalueCast -Zc:wchar_t -Zc:forScope)
 endif()
 
 find_package(unofficial-libharu CONFIG REQUIRED)

@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <type_traits>
 
 namespace misc {
 
@@ -300,7 +301,7 @@ namespace misc {
 namespace misc {
 
 	inline std::string pathToStr(std::filesystem::path const& fpath) {
-	 #if _WIN32
+	 #if defined _WIN32
 	 	return std::string((char const*)(fpath.u8string().c_str()));
 	 	//return reinterpret_cast<std::string const&&>(fpath.u8string());
 	 #else
@@ -308,17 +309,25 @@ namespace misc {
 	 #endif
 	}
 
-	//template<typename STR>
-	//inline std::filesystem::path strToPath(STR const& s) {
-	// 	return std::filesystem::path(s);
-	//}
-	inline std::filesystem::path strToPath(char const* s) {
-	 #if _WIN32
-	 	return std::filesystem::path((char8_t const*)s);
-	 #else
-	 	return std::filesystem::path(s);
-	 #endif
+
+ #if defined _WIN32
+	inline std::filesystem::path strToPath(std::string_view const& s) {
+	  #if __cplusplus < 202002L
+	 	return std::filesystem::u8path(s);
+	  #else
+	 	return std::filesystem::path(std::basic_string_view<char8_t>((char8_t const*)s.data(), s.size()));
+	  #endif
 	}
+	template<typename STR, typename = std::enable_if< (sizeof(typename STR::value_type) > 1) >::type >
+	inline std::filesystem::path strToPath(STR const& s) {
+	 	return std::filesystem::path(s);
+	}
+ #else
+	template<typename STR>
+	inline std::filesystem::path strToPath(STR const& s) {
+		return std::filesystem::path(s);
+	}
+ #endif
 
 	inline std::uintmax_t getFileBytes(std::filesystem::path const& fpath) {
 		if (std::filesystem::exists(fpath))

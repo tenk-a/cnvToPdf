@@ -30,6 +30,7 @@ public:
         : firstNameToTitle_(true)
         , digitCmp_(true)
         , vflag_(false)
+        , dstdir_(".")
     {
     }
 
@@ -101,7 +102,8 @@ public:
                     titleAuthor_ = "[" + conv_opts_.author + "] " + conv_opts_.title;
                 }
             }
-            outname_ = dstdir_ / (titleAuthor_ + ".pdf");
+            outname_ = strToPath(titleAuthor_ + ".pdf");
+            outname_ = dstdir_ / outname_;
         }
 
         std::sort(jpgfiles.begin(), jpgfiles.end(), FnameCmp(digitCmp_));
@@ -130,26 +132,26 @@ private:
     Er_t scanOpts(char* arg) {
         char* a = arg;
         assert(a && *a == '-');
-        if (checkOpt(a, "-outline")) {
+        if (checkOpt(a, "--outline")) {
             conv_opts_.outline = (*a != '-');
-        } else if (checkOpt(a, "-output") || checkOpt(a, "-o")) {
+        } else if (checkOpt(a, "--output") || checkOpt(a, "-o")) {
 			if (!*a) return optErr(arg);
             outname_ = strToPath(a);
-        } else if (checkOpt(a, "-digit") || checkOpt(a, "-D")) {
+        } else if (checkOpt(a, "--digit") || checkOpt(a, "-D")) {
             digitCmp_ = (*a != '-');
-        } else if (checkOpt(a, "-out-dir") || checkOpt(a, "-d")) {
+        } else if (checkOpt(a, "--out-dir") || checkOpt(a, "-d")) {
             if (!*a) return optErr(arg);
-            dstdir_ = removeLastDirSep((char8_t*)a);
-        } else if (checkOpt(a, "-title-author") || checkOpt(a, "-T")) {
+            dstdir_ = strToPath(removeLastDirSep(a));
+        } else if (checkOpt(a, "--title-author") || checkOpt(a, "-T")) {
             if (!*a) return optErr(arg);
             titleAuthor_ = a;
             getTitleAuthor(titleAuthor_, conv_opts_.title, conv_opts_.author);
             firstNameToTitle_ = false;
-        } else if (checkOpt(a, "-title") || checkOpt(a, "-t")) {
+        } else if (checkOpt(a, "--title") || checkOpt(a, "-t")) {
             if (!*a) return optErr(arg);
             conv_opts_.title = a;
             firstNameToTitle_ = false;
-		} else if (checkOpt(a, "-author") || checkOpt(a, "-a")) {
+		} else if (checkOpt(a, "--author") || checkOpt(a, "-a")) {
             if (!*a) return optErr(arg);
             conv_opts_.author = a;
             firstNameToTitle_ = false;
@@ -168,18 +170,20 @@ private:
                 fprintf(stderr, "option %s : out of range", arg);
                 return Er;
             }
-        } else if (checkOpt(a, "-page-layout-single")) {
+        } else if (checkOpt(a, "--page-layout-single")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_SINGLE;
-        } else if (checkOpt(a, "-page-layout-one-column")) {
+        } else if (checkOpt(a, "--page-layout-one-column")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_ONE_COLUMN;
-        } else if (checkOpt(a, "-page-layout-two-column-left")) {
+        } else if (checkOpt(a, "--page-layout-two-column-left")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_COLUMN_LEFT;
-        } else if (checkOpt(a, "-page-layout-two-column-right")) {
+        } else if (checkOpt(a, "--page-layout-two-column-right")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_COLUMN_RIGHT;
-        } else if (checkOpt(a, "-page-layout-two-page-left")) {
+        } else if (checkOpt(a, "--page-layout-two-page-left")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_LEFT;
-        } else if (checkOpt(a, "-page-layout-two-page-right")) {
+        } else if (checkOpt(a, "--page-layout-two-page-right")) {
             conv_opts_.layout_mode = HPDF_PAGE_LAYOUT_TWO_PAGE_RIGHT;
+        } else if (checkOpt(a, "-v")) {
+            vflag_ = (*a != '-');
         } else if (checkOpt(a, "-h") || checkOpt(a, "-?")) {
             return usage();
 		} else {
