@@ -1,100 +1,86 @@
-# cnvToPdf v0.1c
+# cnvToPdf v1.0
 
-•¡” jpg ‰æ‘œ‚ðpdf‰»
+è¤‡æ•° jpg ç”»åƒã‚’pdfåŒ–
 
 
-## ‹@”\
+## æ©Ÿèƒ½
 
-- •¡” jpg ‰æ‘œ‚ðpdf‰».
-- ‰E’Ô‚¶Žw’è‰Â”\
-- Œ©ŠJ‚«Žw’è‰Â”\
-- ƒ^ƒCƒgƒ‹‚Æ’˜ŽÒ–¼‚ÌŽw’è‰Â”\
+- è¤‡æ•° jpg ç”»åƒã‚’pdfåŒ–
+- å·¦å³ç¶´ã˜æŒ‡å®š
+- è¦‹é–‹ãæŒ‡å®š
+- ã‚¿ã‚¤ãƒˆãƒ«ã¨è‘—è€…åã®æŒ‡å®š
 
-## Žg‚¢•û
+## ä½¿ã„æ–¹
 
-usage > jpg2pdf.exe [ƒIƒvƒVƒ‡ƒ“] jpgƒtƒ@ƒCƒ‹...  
-  1–‡ˆÈã‚ÌŽw’è‚³‚ê‚½jpg‰æ‘œ‚ðƒtƒ@ƒCƒ‹–¼‚Åƒ\[ƒg‚µ‚ÄA‚P‚Â‚Ìpdfƒtƒ@ƒCƒ‹‚ð¶¬.  
-  ƒ\[ƒg‚Íƒtƒ@ƒCƒ‹–¼‚Ì”’l•”•ª‚Í”’l“¯Žm‚Å”äŠri—á‚¦‚Î img_2.jpg, img_10.jpg ‡‚É‚È‚éj
+usage > jpg2pdf.exe [ã‚ªãƒ—ã‚·ãƒ§ãƒ³] jpgãƒ•ã‚¡ã‚¤ãƒ«...  
+  1æžšä»¥ä¸Šã®æŒ‡å®šã•ã‚ŒãŸjpgç”»åƒã‚’ãƒ•ã‚¡ã‚¤ãƒ«åã§ã‚½ãƒ¼ãƒˆã—ã¦ã€ï¼‘ã¤ã®pdfãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆ.  
+  ã‚½ãƒ¼ãƒˆã¯ãƒ•ã‚¡ã‚¤ãƒ«åã®æ•°å€¤éƒ¨åˆ†ã¯æ•°å€¤åŒå£«ã§æ¯”è¼ƒï¼ˆä¾‹ãˆã° img_2.jpg, img_10.jpg é †ã«ãªã‚‹ï¼‰
 
-ƒIƒvƒVƒ‡ƒ“:
-  -o  --output"FILE.pdf"               o—Í‚·‚épdfƒtƒ@ƒCƒ‹–¼  
-                                       Žw’è–³‚È‚çÅ‰‚Ìjpg‚ÌƒfƒBƒŒƒNƒgƒŠ–¼‚ð-T‚ÅÌ—p  
-  -d  --out-dir"DIR"                   --outŽw’è‚Ì‚È‚¢ê‡‚Ìo—ÍƒfƒBƒŒƒNƒgƒŠ–¼  
-      --digit[-]                       ƒtƒ@ƒCƒ‹–¼‚Ì”Žš—ñ‚ð”’l‚Æ‚µ‚Ä”äŠr(*)  [- ‚µ‚È‚¢]  
-  -r  --r2l                            ‰E’Ô‚¶Žw’è  
-  -r- --l2r                            ¶’Ô‚¶Žw’è(*)  
-      --outline                        ƒAƒEƒgƒ‰ƒCƒ“(•Å”Ô†ˆê——)‚ð•t‰Á  
-  -t  --title"ƒ^ƒCƒgƒ‹"                ƒ^ƒCƒgƒ‹Žw’è  
-  -a  --author"’˜ŽÒ"        ’˜ŽÒŽw’è  
-  -T  --author-title"[’˜ŽÒ] ƒ^ƒCƒgƒ‹"  ’˜ŽÒ‚ð[]‚ÅˆÍ‚ñ‚Å’˜ŽÒ‚Æƒ^ƒCƒgƒ‹‚ðŽw’è  
-  -T  --author-title"’˜ŽÒ - ƒ^ƒCƒgƒ‹"  ' - '‚ð‹²‚ñ‚Å’˜ŽÒ‚Æƒ^ƒCƒgƒ‹‚ðŽw’è  
-  -mN                                  •Å‚ÌŠJ‚«•ûŽw’è(0`5).‰º‹L6‚Â‚É“¯‚¶  
-      --page-layout-single             0:’P•Å(*)  
-      --page-layout-one-column         1:’P•ÅƒXƒNƒ[ƒ‹  
-      --page-layout-two-column-left    2:Œ©ŠJ‚«ƒXƒNƒ[ƒ‹—¼•ÅŠJŽn  
-      --page-layout-two-column-right   3:Œ©ŠJ‚«ƒXƒNƒ[ƒ‹•Ð•ÅŠJŽn  
-      --page-layout-two-page-left      4:Œ©ŠJ‚«—¼•ÅŠJŽn  
-      --page-layout-two-page-right     5:Œ©ŠJ‚«•Ð•ÅŠJŽn  
+ã‚ªãƒ—ã‚·ãƒ§ãƒ³:
+  -o  --output="FILE.pdf"               å‡ºåŠ›ã™ã‚‹pdfãƒ•ã‚¡ã‚¤ãƒ«å  
+                                        æŒ‡å®šç„¡ãªã‚‰æœ€åˆã®jpgã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã‚’ -T ã§æŽ¡ç”¨  
+  -d  --out-dir="DIR"                   -o æŒ‡å®šã®ãªã„å ´åˆã®å‡ºåŠ›ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå  
+  -D  --digit[-]                        ãƒ•ã‚¡ã‚¤ãƒ«åã®æ•°å­—åˆ—ã‚’æ•°å€¤ã¨ã—ã¦æ¯”è¼ƒ(*)  [- ã—ãªã„]  
+  -r  --r2l                             å³ç¶´ã˜æŒ‡å®š  
+  -r- --l2r                             å·¦ç¶´ã˜æŒ‡å®š(*)  
+      --outline                         ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³(é ç•ªå·ä¸€è¦§)ã‚’ä»˜åŠ   
+  -t  --title="ã‚¿ã‚¤ãƒˆãƒ«"                ã‚¿ã‚¤ãƒˆãƒ«æŒ‡å®š  
+  -a  --author="è‘—è€…"        è‘—è€…æŒ‡å®š  
+  -T  --author-title="[è‘—è€…] ã‚¿ã‚¤ãƒˆãƒ«"  è‘—è€…ã‚’[]ã§å›²ã‚“ã§è‘—è€…ã¨ã‚¿ã‚¤ãƒˆãƒ«ã‚’æŒ‡å®š  
+  -T  --author-title="è‘—è€… - ã‚¿ã‚¤ãƒˆãƒ«"  ' - 'ã‚’æŒŸã‚“ã§è‘—è€…ã¨ã‚¿ã‚¤ãƒˆãƒ«ã‚’æŒ‡å®š  
+  -mN                                  é ã®é–‹ãæ–¹æŒ‡å®š(0ï½ž5).ä¸‹è¨˜6ã¤ã«åŒã˜  
+      --page-layout-single             0:å˜é (*)  
+      --page-layout-one-column         1:å˜é ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«  
+      --page-layout-two-column-left    2:è¦‹é–‹ãã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ä¸¡é é–‹å§‹  
+      --page-layout-two-column-right   3:è¦‹é–‹ãã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ç‰‡é é–‹å§‹  
+      --page-layout-two-page-left      4:è¦‹é–‹ãä¸¡é é–‹å§‹  
+      --page-layout-two-page-right     5:è¦‹é–‹ãç‰‡é é–‹å§‹  
 
-  ¦ (*)•t‚ÍƒfƒtƒHƒ‹ƒg‚ÅŽw’èÏ  
-  ¦ ƒIƒvƒVƒ‡ƒ“‚ÆƒIƒvƒVƒ‡ƒ“ˆø”‚ÌŠÔ‚É‹ó”’‚Í“ü‚ê‚ç‚ê‚È‚¢B-dHOGE ‚Ì‚æ‚¤‚É‹ó”’–³‚ÅŽw’è‚Ì‚±‚Æ.  
+  â€» (*)ä»˜ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§æŒ‡å®šæ¸ˆ  
+  â€» ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã¨ã‚ªãƒ—ã‚·ãƒ§ãƒ³å¼•æ•°ã®é–“ã«ç©ºç™½ã¯å…¥ã‚Œã‚‰ã‚Œãªã„ã€‚-dHOGE ã®ã‚ˆã†ã«ç©ºç™½ç„¡ã§æŒ‡å®šã®ã“ã¨.  
   
 
-## ’˜ŽÒ–¼Aƒ^ƒCƒgƒ‹–¼ ‚É‚Â‚¢‚Ä
+## è‘—è€…åã€ã‚¿ã‚¤ãƒˆãƒ«å ã«ã¤ã„ã¦
 
-’˜ŽÒ–¼Aƒ^ƒCƒgƒ‹–¼ Žw’è‚Í pdf “à‚ÉÝ’è‚·‚é‚ªo—Íƒtƒ@ƒCƒ‹–¼‚É‚à—p‚¢‚éB(-oŽw’è–³Žž)  
+è‘—è€…åã€ã‚¿ã‚¤ãƒˆãƒ«å æŒ‡å®šã¯ pdf å†…ã«è¨­å®šã™ã‚‹ãŒå‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åã«ã‚‚ç”¨ã„ã‚‹ã€‚(-oæŒ‡å®šç„¡æ™‚)  
 
-‚à‚Æ‚à‚ÆŒÂl“I‚É‚Í "’˜ŽÒ–¼ - ƒ^ƒCƒgƒ‹–¼" ‚Æ‚¢‚¤ƒtƒ@ƒCƒ‹–¼‚Ì•t‚¯•û‚ð‚µ‚Ä‚¢‚½‚Ì‚¾‚ªA
-iPad,iPhone‚Å‚æ‚­Žg‚Á‚Ä‚é i•¶ŒÉ(S,HD) ‚ªApdf“à‚Ìî•ñ‚ÍŒ©‚¸‚Éƒtƒ@ƒCƒ‹–¼‚ª  
-  "[’˜ŽÒ–¼] ƒ^ƒCƒgƒ‹–¼" (‚â "ƒ^ƒCƒgƒ‹–¼[’˜ŽÒ–¼]")  
-‚Ì‚æ‚¤‚Èê‡A[]“à‚ð’˜ŽÒ–¼A‚»‚êˆÈŠO‚ðƒ^ƒCƒgƒ‹–¼‚Æ‚µ‚Äˆµ‚Á‚Ä‚¢‚é‚æ‚¤‚È‚Ì‚Å
-‚»‚ê‚É•í‚¢Aæ“ª‚É [’˜ŽÒ–¼] ‚ª‚ ‚ê‚Î‚»‚ê‚ð’˜ŽÒ–¼‚Æ‚µ‚½B
-(Œã‚ë[]‚ÍŒÂl“I‚É’˜ŽÒ–¼ˆÈŠO‚ÅŽg‚¤‚±‚Æ‚ª‚ ‚é‚Ì‚Å–¢ƒTƒ|[ƒg)
+ã‚‚ã¨ã‚‚ã¨å€‹äººçš„ã«ã¯ "è‘—è€…å - ã‚¿ã‚¤ãƒˆãƒ«å" ã¨ã„ã†ãƒ•ã‚¡ã‚¤ãƒ«åã®ä»˜ã‘æ–¹ã‚’ã—ã¦ã„ãŸã®ã ãŒã€
+iPad,iPhoneã§ã‚ˆãä½¿ã£ã¦ã‚‹ iæ–‡åº«(S,HD) ãŒã€pdfå†…ã®æƒ…å ±ã¯è¦‹ãšã«ãƒ•ã‚¡ã‚¤ãƒ«åãŒ  
+  "[è‘—è€…å] ã‚¿ã‚¤ãƒˆãƒ«å" (ã‚„ "ã‚¿ã‚¤ãƒˆãƒ«å[è‘—è€…å]")  
+ã®ã‚ˆã†ãªå ´åˆã€[]å†…ã‚’è‘—è€…åã€ãã‚Œä»¥å¤–ã‚’ã‚¿ã‚¤ãƒˆãƒ«åã¨ã—ã¦æ‰±ã£ã¦ã„ã‚‹ã‚ˆã†ãªã®ã§
+ãã‚Œã«å€£ã„ã€å…ˆé ­ã« [è‘—è€…å] ãŒã‚ã‚Œã°ãã‚Œã‚’è‘—è€…åã¨ã—ãŸã€‚
 
--oŽw’è–³‚Å -a -t ‚ÅŽw’è‚µ‚½ê‡‚Ìo—Íƒtƒ@ƒCƒ‹–¼‚Í "[’˜ŽÒ–¼] ƒ^ƒCƒgƒ‹–¼" ‚Æ‚È‚éB
--T ‚Ìê‡‚ÍA-T ‚ÌŽw’è‚Ì‚Ü‚Ü‚ªƒtƒ@ƒCƒ‹–¼‚Æ‚È‚éB
+-o æŒ‡å®šç„¡ã§ -a -t ã§æŒ‡å®šã—ãŸå ´åˆã®å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åã¯ "[è‘—è€…å] ã‚¿ã‚¤ãƒˆãƒ«å" ã¨ãªã‚‹ã€‚
+-T ã®å ´åˆã¯ã€-T ã®æŒ‡å®šã®ã¾ã¾ãŒãƒ•ã‚¡ã‚¤ãƒ«åã¨ãªã‚‹ã€‚
 
-¦ ƒ^ƒCƒgƒ‹‚â’˜ŽÒ–¼‚Ì•¶Žš‚ÍASJIS”ÍˆÍ‚ÉŒÀ‚ç‚ê‚é. UNICODE–¢‘Î‰ž.
+ã‚¿ã‚¤ãƒˆãƒ«ã‚„è‘—è€…åã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã¯ã€UNICODE ã‚’ç”¨ã„ã¦ã„ã‚‹ã€‚
+
+mac,linux ã® os ç’°å¢ƒã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã¯ UTF-8 ã§ã‚ã‚‹ã“ã¨ã‚’å‰æã«å‹•ä½œã™ã‚‹ã€‚
+windows ç’°å¢ƒã‚‚ UNICODE ã ãŒã€å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«åã«ã¤ã„ã¦ã¯ OSã®æ–‡å­—ã‚³ãƒ¼ãƒ‰(SJIS)
+ã®åˆ¶é™ã‚’å—ã‘ã‚‹ã€‚
 
 
-## ƒ\[ƒXƒRƒ“ƒpƒCƒ‹
+## ã‚½ãƒ¼ã‚¹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
-ƒRƒ“ƒpƒCƒ‹‚·‚é‚É‚ÍA‚±‚Ìƒ\[ƒX‚Ì‘¼‚É libharu, zlib, libpng ‚Ìƒ\[ƒX‚ª•K—v.  
-‚»‚ê‚ç‚Ìƒ\[ƒX‚ðƒ_ƒEƒ“ƒ[ƒh‚µ‚Ä‚«‚Äƒ\[ƒXŠÂ‹«‚Ì  
-    libs_vc/  
-ƒtƒHƒ‹ƒ_“à‚É  
-  libharu-RELEASE_2_3_0/  
-  lpng1621/  
-  zlib-1.2.8/  
-‚Ì‚æ‚¤‚É”z’uB(ã‹L‚ÍŽÀÛ‚ÉŽg—p‚µ‚½ƒo[ƒWƒ‡ƒ“B‘½­‘OŒã‚Ìƒo[ƒWƒ‡ƒ“‚Å‚à‘åä•v‚È‚Í‚¸)  
+vcpkg ï¼† cmake ã‚’ç”¨ã„ã¦ãƒ“ãƒ«ãƒ‰ã™ã‚‹ã€‚
+vcpkg ã¯ ç’°å¢ƒå¤‰æ•° VCPKG_ROOT (ã¨ VCPKG_DEFAULT_TRIPLET) ã‚’è¨­å®šã®ã“ã¨ã€‚
 
-libs_vc/bld_lib_bat/libs_config.bat ‚ðƒeƒLƒXƒgƒGƒfƒBƒ^‚Å•ÒWA  
-  set CcName=vc90  
-‚Ì‚æ‚¤‚ÉŽg—p‚·‚évc‚Ìƒo[ƒWƒ‡ƒ“‚ðŽw’èB(vc80,vc90,vc100,vc120,vc140) 
-libs_vc/bld_lib_bat ƒtƒHƒ‹ƒ_‚ðƒJƒŒƒ“ƒg‚É‚µ‚Ä  
-  bld.bat  
-‚ðŽÀsBmisc_inc, misc_lib ‚Éƒwƒbƒ_‚Ælib‚ªì‚ç‚ê‚éB  
+build/ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã¦  
+ cmake ..  
+ make  
+ã‚„
+ cmake ..
+ msbuild cnvToPdf.sln
+ã§ãƒ“ãƒ«ãƒ‰ã€‚
 
-Žg—p‚·‚évc‚É‡‚í‚¹‚Ä ‚¢‚¸‚ê‚©‚Ì lib_vc???/ ‚Ì sln ‚ðŠJ‚¢‚ÄƒRƒ“ƒpƒCƒ‹B  
-ŠY“–ŠO‚Ìƒo[ƒWƒ‡ƒ“‚È‚ç“K“–‚ÉƒRƒ“ƒo[ƒg‚Ì‚±‚ÆB  
 
-Šî–{“I‚Éstaticƒ‰ƒ“ƒ^ƒCƒ€‚Åx64Ý’è‚ ‚èB‚½‚¾‚µ vc8exp ‚Í express”Å‚ðl—¶‚µ‚Ä
-dllƒ‰ƒ“ƒ^ƒCƒ€Žg—p‚Åx64–³‚É‚µ‚Ä‚ ‚éB  
-express”Å‚Ìê‡‚Í bld.bat ŽÀs‘O‚É libs_config.bat ‚ð  
-  set CcHasX64=0  
-  set CcNoRtStatic=1  
-‚É‘‚«Š·‚¦‚é•K—v‚ ‚èB  
-(‚ªŽÀÛ‚Éexpress”Å‚ÅƒRƒ“ƒpƒCƒ‹‚µ‚½‚í‚¯‚Å‚È‚¢‚Ì‚Å’ˆÓ.ƒ_ƒ‚È‚çƒSƒƒ“)  
+## å±¥æ­´
+2016/02/28 v0.1  å…¬é–‹  
+2016/02/29 v0.1b  libharuã®ãƒ“ãƒ«ãƒ‰ã§ç¢ºèªã‚‚å…¼ã­ã¦ demo ã‚‚ãƒ“ãƒ«ãƒ‰ã—ã¦ã„ãŸãŒã€
+ãã®ä¸­ã® jpfont_demo.exe ã®å®Ÿè¡Œã§ã‚¨ãƒ©ãƒ¼çµ‚äº†ã—ã¦ã—ã¾ã†ã€‚jpfont_demo.c ä¸­ã®ãƒ•ã‚©ãƒ³ãƒˆå
+MS-Mincyo ãŒåŽŸå› ã§ã€å…¨ã¦MS-Minchoã«ç½®æ›ã™ã‚Œã°ç›´ã‚‹ãŒã€ä¸»ç›®çš„ã§ãªã„ã®ã§ demo ã‚’
+ãƒ“ãƒ«ãƒ‰ã—ãªã„ã‚ˆã†ã«ãƒãƒƒãƒä¿®æ­£.  
+2016/08/25 v0.1c  ãƒ•ã‚¡ã‚¤ãƒ«åæ¯”è¼ƒãŒå¤§æ–‡å­—å°æ–‡å­—åˆ¥ã«ãªã£ã¦ã„ãŸã®ã‚’åŒä¸€è¦–ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£  
 
-¦ VC‚Ìƒo[ƒWƒ‡ƒ“•ª‚¯‚ÉAVisual Studio ‚Ìƒ}ƒNƒ•Ï” PlatformToolsetVersion ‚ð
-—p‚¢‚Ä‚¢‚éB‚±‚ê‚Í vc10(2010)ˆÈ~‚É‚Í‚ ‚é‚ªAvc9(2008)ˆÈ‘O‚É‚Í–³‚¢‚Ì‚Å
-‚»‚ê‚ç‚Å‚Í macro.vsprops ‚Æ‚¢‚¤‚Ì‚ð’Ç‰Á‚µA‚»‚Ì’†‚Å PlatformToolsetVersion ‚ð
-Ý’è‚·‚é‚æ‚¤‚É‚µ‚Ä‚¢‚éB
-
-## —š—ð
-2016/02/28 v0.1  ŒöŠJ  
-2016/02/29 v0.1b  libharu‚Ìƒrƒ‹ƒh‚ÅŠm”F‚àŒ“‚Ë‚Ä demo ‚àƒrƒ‹ƒh‚µ‚Ä‚¢‚½‚ªA
-‚»‚Ì’†‚Ì jpfont_demo.exe ‚ÌŽÀs‚ÅƒGƒ‰[I—¹‚µ‚Ä‚µ‚Ü‚¤Bjpfont_demo.c ’†‚ÌƒtƒHƒ“ƒg–¼
-MS-Mincyo ‚ªŒ´ˆö‚ÅA‘S‚ÄMS-Mincho‚É’uŠ·‚·‚ê‚Î’¼‚é‚ªAŽå–Ú“I‚Å‚È‚¢‚Ì‚Å demo ‚ð
-ƒrƒ‹ƒh‚µ‚È‚¢‚æ‚¤‚Éƒoƒbƒ`C³.  
-2016/08/25 v0.1c  ƒtƒ@ƒCƒ‹–¼”äŠr‚ª‘å•¶Žš¬•¶Žš•Ê‚É‚È‚Á‚Ä‚¢‚½‚Ì‚ð“¯ˆêŽ‹‚·‚é‚æ‚¤‚ÉC³  
+2023/08/20 v1.0   è‡ªå‰ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ“ãƒ«ãƒ‰ã‚’ã‚„ã‚ vcpkg ï¼† cmake ã§ãƒ“ãƒ«ãƒ‰ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´ã€‚
+                  ã‚¿ã‚¤ãƒˆãƒ«ã‚„è‘—è€…ã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’ UNICODE(utf-8)ã«å¤‰æ›´ã€‚
