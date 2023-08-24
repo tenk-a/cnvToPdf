@@ -65,13 +65,16 @@ windows 環境も UNICODE だが、出力ファイル名については OSの文
 vcpkg ＆ cmake を用いてビルドする。
 vcpkg は 環境変数 VCPKG_ROOT (と VCPKG_DEFAULT_TRIPLET) を設定のこと。
 
-build/ ディレクトリにて  
+プロジェクト・ディレクトリ下に build ディレクトリを作る
+ mkdir build
+
+build/ ディレクトリをカレントにして  
  cmake ..  
  make  
 や
- cmake ..
- msbuild cnvToPdf.sln
-でビルド。
+ cmake ..  
+ msbuild cnvToPdf.sln  
+等を行いビルド。
 
 
 ## 履歴
