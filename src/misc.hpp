@@ -22,7 +22,7 @@ namespace misc {
 	template<> struct 		nbytes_to_uchar<4> { typedef char32_t type; };
 	template<typename C> struct char_to_uchar { typedef typename nbytes_to_uchar<sizeof(C)>::type type; };
 
-	template<typename C> std::size_t
+	template<typename C> inline std::size_t
 	strLen(C const* s) {
 		return std::char_traits<C>::length(s);
 	}
