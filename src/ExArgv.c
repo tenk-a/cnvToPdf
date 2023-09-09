@@ -1,16 +1,20 @@
 /**
- *  @file   ExArgv.c
+ *  @file   ExArgv.cpp
  *  @brief  argc,argvの拡張処理(ワイルドカード,レスポンスファイル).
  *  @author Masashi KITAMURA
- *  @date   2006-2010
+ *  @date   2006-2010,2023
  *  @note
  *  -   main(int argc,char* argv[]) のargc,argvに対し、
  *      ワイルドカード指定やレスポンスファイル指定等を展開したargc,argvに変換.
- *      main()の初っ端ぐらいで ExArgv_conv(&argc, &argv); のように呼び出す.
- *      あるいは WinMain() では, ExArgv_forWinMain(cmdl, &argc, &argv);
+ *      main()の初っ端ぐらいで
+ *          ExArgv_conv(&argc, &argv);
+ *      のように呼び出す.
+ *  -   WinMain() で使う場合は EXARGV_FOR_WINMAIN を定義し、
+ *          ExArgv_forWinMain(cmdl, &argc, &argv);
+ *      のように呼び出す.
  *
- *  -   メインはdos/win系(のコマンドラインツール)を想定.
- *      一応 linux gccでのコンパイル可.
+ *  -   主にWin/Dos系(のコマンドラインツール)での利用を想定.
+ *      一応 mac,linux gcc/clang でのコンパイル可.
  *      (unix系だとワイルドカードはシェル任せだろうで、メリット少なく)
  *
  *  -   ExArgv.hは、一応ヘッダだが、ExArgv.c の設定ファイルでもある.
@@ -26,12 +30,14 @@
  *
  *  -   引数文字列の先頭が'-'ならばオプションだろうで、その文字列中に
  *      ワイルドカード文字があっても展開しない.
- *  -   マクロ UNICODE が定義されていれば、wchar_t用、でなければchar用.
+ *  -   マクロ UNICODE か EXARGV_USE_WCHAR を定義で wchar_t用、なければchar用.
+ *  -   UTF8 が普及したので、EXARGV_USE_MBC 定義時のみMBCの2バイト目'\'対処.
  *  -   _WIN32 が定義されていれば win用、でなければ unix系を想定.
  *
  *  - Public Domain Software
  */
  // 2009 再帰指定を**にすることで、仕様を単純化.
+ // 2023 UTF-8 対処. vcpkgがWin用に必ず_WINDOWSを定義するためWinMain指定変更.
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,7 +46,11 @@
 #include <assert.h>
 #endif
 
-#ifdef UNICODE
+#if defined UNICODE && defined EXARGV_USE_WCHAR == 0
+#define EXARGV_USE_WCHAR
+#endif
+
+#ifdef EXARGV_USE_WCHAR
 #include <wchar.h>
 #endif
 
@@ -65,7 +75,7 @@
 #endif
 
 #ifndef EXARGV_USE_RESFILE
-#define EXARGV_USE_RESFILE  1                   ///< @レスポンスファイルを有効にする.
+#define EXARGV_USE_RESFILE  0                   ///< @レスポンスファイルを有効にする.
 #endif
 
 #ifndef EXARGV_USE_CONFIG
@@ -79,7 +89,6 @@
 #if 0 //ndef EXARGV_USE_FULLPATH_ARGV0
 #define EXARGV_USE_FULLPATH_ARGV0   1           ///< argv[0] の実行ファイル名をフルパスにする/しない. win環境のみ.
 #endif
-
 
 //#define EXARGV_TOSLASH                        ///< 定義すれば、filePath中の \ を / に置換.
 //#define EXARGV_TOBACKSLASH                    ///< 定義すれば、filePath中の / を \ に置換.
@@ -106,7 +115,7 @@
 
 #if defined _WIN32
  #include <windows.h>
- #if defined _MSC_VER   // CharNext()で必要.
+ #if defined _MSC_VER && defined EXARGV_USE_MBC // CharNext()で必要.
   #pragma comment(lib, "User32.lib")
  #endif
 #elif defined MSDOS
@@ -137,7 +146,7 @@
  #ifdef _MAX_PATH
   #define MAX_PATH      _MAX_PATH
  #else
-  #if defined DOSWIN32
+  #if defined MSDOS	//DOSWIN32
    #define MAX_PATH     260
   #else
    #define MAX_PATH     1024
@@ -150,7 +159,7 @@
 // ===========================================================================
 // char,wchar_t 切り替えの辻褄合わせ関係.
 
-#ifdef UNICODE
+#ifdef EXARGV_USE_WCHAR
 #undef  _pgmptr
 #define _pgmptr         _wpgmptr
 #define T(x)            L##x
@@ -208,7 +217,8 @@ static unsigned char        s_wildMode;         ///< ワイルドカード文字
 #endif
 
 #if (EXARGV_USE_WC || EXARGV_USE_RESFILE) && !EXARGV_USE_CONFIG && !defined(EXARGV_ENVNAME) \
-        && !defined(_WINDOWS) && !defined(EXARGV_USE_SETARGV) && !defined EXARGV_TOSLASH && !defined EXARGV_TOBACKSLASH
+        && !defined(EXARGV_FOR_WINMAIN) && !defined(EXARGV_USE_SETARGV) \
+        && !defined EXARGV_TOSLASH && !defined EXARGV_TOBACKSLASH
     #define EXARGV_USE_CHK_CHR
 #endif
 
@@ -232,7 +242,7 @@ static void         ExArgv_free(void* s);
 static int          ExArgv_Vector_findFname(ExArgv_Vector* pVec, const char_t* pPathName, int recFlag);
 static void         ExArgv_wildCard(ExArgv_Vector* pVec);
 #endif
-#if defined _WINDOWS || defined EXARGV_USE_SETARGV
+#if defined EXARGV_FOR_WINMAIN || defined EXARGV_USE_SETARGV
 static int          ExArgv_forCmdLine1(const char_t* pCmdLine, int* pArgc, char_t*** pppArgv);
 #endif
 #if defined EXARGV_USE_CHK_CHR
@@ -261,7 +271,8 @@ static char_t*      ExArgv_fname_backslashToSlash(char_t filePath[]);
 #if EXARGV_USE_WC || (EXARGV_USE_CONFIG && defined DOSWIN32 == 0)
 static char_t*      ExArgv_fname_baseName(const char_t* adr);
 #endif
-#if EXARGV_USE_RESFILE || EXARGV_USE_CONFIG || defined EXARGV_ENVNAME || defined _WINDOWS || defined EXARGV_USE_SETARGV
+#if EXARGV_USE_RESFILE || EXARGV_USE_CONFIG || defined EXARGV_ENVNAME \
+    || defined EXARGV_FOR_WINMAIN || defined EXARGV_USE_SETARGV
 static char_t*      ExArgv_fname_scanArgStr(const char_t* str, char_t arg[], int argSz);
 #endif
 #if EXARGV_USE_WC
@@ -277,7 +288,7 @@ static int          ExArgv_fname_isWildCard(const char_t* s);
   #error No _MSC_VER, though EXARGV_USE_SETARGV was defined.
  #endif
 
-#if defined UNICODE
+#if defined EXARGV_USE_WCHAR
 _CRTIMP EXTERN_C wchar_t *_wcmdln;
 /** vc++ で、main()に渡される argc,argv を生成する処理(をこれに置き換える)
  */
@@ -297,7 +308,7 @@ EXTERN_C int __cdecl __setargv (void)
 
 
 
-#elif defined _WINDOWS
+#elif defined EXARGV_FOR_WINMAIN
 
 /** winアプリで、WinMain初っ端で、argc,argvを作りたいときに使うのを想定.
  */
@@ -310,7 +321,7 @@ void ExArgv_forWinMain(const char_t* pCmdLine, int* pArgc, char_t*** pppArgv)
 
 
 
-#if defined _WINDOWS || defined EXARGV_USE_SETARGV
+#if defined EXARGV_FOR_WINMAIN || defined EXARGV_USE_SETARGV
 /** 1行の文字列pCmdLine からargc,argvを生成. (先に環境変数や.cfgファイルを処理)
  */
 static int ExArgv_forCmdLine1(const char_t* pCmdLine, int* pArgc, char_t*** pppArgv)
@@ -343,7 +354,7 @@ static int ExArgv_forCmdLine1(const char_t* pCmdLine, int* pArgc, char_t*** pppA
 
     // 環境変数の取得.
   #ifdef EXARGV_ENVNAME
-    assert(strlen(EXARGV_ENVNAME) > 0);
+    assert(STR_LEN(EXARGV_ENVNAME) > 0);
     ExArgv_getEnv(EXARGV_ENVNAME, pVec);
   #endif
 
@@ -391,7 +402,7 @@ static int ExArgv_forCmdLine1(const char_t* pCmdLine, int* pArgc, char_t*** pppA
 
 // ===========================================================================
 
-#if (defined _WINDOWS) == 0 || (defined EXARGV_USE_SETARGV) == 0
+#if (defined EXARGV_FOR_WINMAIN) == 0 || (defined EXARGV_USE_SETARGV) == 0
 
 /** argc,argv をレスポンスファイルやワイルドカード展開して、argc, argvを更新して返す.
  *  @param  pArgc       argcのアドレス.(argvの数)
@@ -449,7 +460,7 @@ void ExArgv_conv(int* pArgc, char_t*** pppArgv)
 
     // 環境変数の取得.
   #ifdef EXARGV_ENVNAME
-    assert(strlen(EXARGV_ENVNAME) > 0);
+    assert(STR_LEN(EXARGV_ENVNAME) > 0);
     ExArgv_getEnv(EXARGV_ENVNAME, pVec);
   #endif
 
@@ -869,7 +880,7 @@ static void ExArgv_VectorToArgv(ExArgv_Vector** ppVec, int* pArgc, char_t*** ppp
 
 // ===========================================================================
 
-#if defined DOSWIN32 == 0 && defined UNICODE == 0   // 環境変数 LANG=ja_JP.SJIS のような状態を前提.
+#if defined DOSWIN32 == 0 && defined EXARGV_USE_WCHAR == 0   // 環境変数 LANG=ja_JP.SJIS のような状態を前提.
 
 static unsigned char        s_shift_char_type = 0;
 
@@ -882,7 +893,7 @@ static void  ExArgv_fname_check_locale()
         const char*     p    = strrchr(lang, '.');
         if (p) {
             ++p;
-            // 0x5c対策が必要なencodingかをチェック. (sjis以外は未チェック)
+            // 0x5c対策が必要なencodingかをチェック. (sjis以外は未確認)
             if (strncasecmp(p, "sjis", 4) == 0) {
                 s_shift_char_type   = 2;
             } else if (strncasecmp(p, "big5", 4) == 0) {
@@ -909,10 +920,10 @@ static int ExArgv_fname_is_mbblead(unsigned c) {
 
 
 /// 文字 C が MS全角の１バイト目か否か. (utf8やeucは \ 問題は無いので 0が帰ればok)
-#if defined _WIN32
+#if defined EXARGV_USE_WCHAR || defined EXARGV_USE_MBC == 0
+//#define ExArgv_FNAME_ISMBBLEAD(c)     (0)
+#elif defined _WIN32
  #define ExArgv_FNAME_ISMBBLEAD(c)      IsDBCSLeadByte(c)
-#elif defined UNICODE
- //#define ExArgv_FNAME_ISMBBLEAD(c)    (0)
 #elif defined HAVE_MBCTYPE_H
  #define ExArgv_FNAME_ISMBBLEAD(c)      _ismbblead(c)
 #else
@@ -921,10 +932,10 @@ static int ExArgv_fname_is_mbblead(unsigned c) {
 
 
 /// 次の文字へポインタを進める. ※CharNext()がサロゲートペアやutf8対応してくれてたらいいなと期待(駄目かもだけど)
-#if  defined _WIN32
-#define ExArgv_FNAME_CHARNEXT(p)        (TCHAR*)CharNext((TCHAR*)(p))
-#elif defined UNICODE
+#if defined EXARGV_USE_WCHAR || defined EXARGV_USE_MBC == 0
 #define ExArgv_FNAME_CHARNEXT(p)        ((p) + 1)
+#elif  defined _WIN32
+#define ExArgv_FNAME_CHARNEXT(p)        (TCHAR*)CharNext((TCHAR*)(p))
 #else
 #define ExArgv_FNAME_CHARNEXT(p)        ((p) + 1 + (ExArgv_FNAME_ISMBBLEAD(*(unsigned char*)(p)) && (p)[1]))
 #endif
@@ -966,7 +977,8 @@ static char_t   *ExArgv_fname_slashToBackslash(char_t filePath[])
 
 
 
-#if EXARGV_USE_RESFILE || EXARGV_USE_CONFIG || defined EXARGV_ENVNAME || defined _WINDOWS || defined EXARGV_USE_SETARGV
+#if EXARGV_USE_RESFILE || EXARGV_USE_CONFIG || defined EXARGV_ENVNAME \
+    || defined EXARGV_FOR_WINMAIN || defined EXARGV_USE_SETARGV
 /** コマンドラインで指定されたファイル名として、""を考慮して,
  *  空白で区切られた文字列(ファイル名)を取得.
  *  @return スキャン更新後のアドレスを返す。strがEOSだったらNULLを返す.
@@ -1209,7 +1221,7 @@ static ExArgv_Vector* ExArgv_Vector_create(unsigned size)
 static void ExArgv_Vector_push(ExArgv_Vector* pVec, const char_t* pStr)
 {
     assert(pVec != 0);
-    assert(pStr  != 0);
+    assert(pStr != 0);
     if (pStr && pVec) {
         unsigned    capa = pVec->capa;
         assert(pVec->buf != 0);

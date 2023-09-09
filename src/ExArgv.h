@@ -2,15 +2,19 @@
  *  @file   ExArgv.h
  *  @brief  argc,argvの拡張処理(ワイルドカード,レスポンスファイル).
  *  @author Masashi KITAMURA
- *  @date   2006-2010
+ *  @date   2006-2010,2023
  *  @note
  *  -   main(int argc,char* argv[]) のargc,argvに対し、
  *      ワイルドカード指定やレスポンスファイル指定等を展開したargc,argvに変換.
- *      main()の初っ端ぐらいで ExArgv_conv(&argc, &argv); のように呼び出す.
- *      あるいは WinMain() では, ExArgv_forWinMain(cmdl, &argc, &argv);
+ *      main()の初っ端ぐらいで
+ *          ExArgv_conv(&argc, &argv);
+ *      のように呼び出す.
+ *  -   WinMain() で使う場合は EXARGV_FOR_WINMAIN を定義し、
+ *          ExArgv_forWinMain(cmdl, &argc, &argv);
+ *      のように呼び出す.
  *
- *  -   メインはdos/win系(のコマンドラインツール)を想定.
- *      一応 linux gccでのコンパイル可.
+ *  -   主にWin/Dos系(のコマンドラインツール)での利用を想定.
+ *      一応 mac,linux gcc/clang でのコンパイル可.
  *      (unix系だとワイルドカードはシェル任せだろうで、メリット少なく)
  *
  *  -   ExArgv.hは、一応ヘッダだが、ExArgv.c の設定ファイルでもある.
@@ -26,21 +30,31 @@
  *
  *  -   引数文字列の先頭が'-'ならばオプションだろうで、その文字列中に
  *      ワイルドカード文字があっても展開しない.
- *  -   マクロ UNICODE が定義されていれば、wchar_t用、でなければchar用.
+ *  -   マクロ UNICODE か EXARGV_USE_WCHAR を定義で wchar_t用、なければchar用.
+ *  -   UTF8 が普及したので、EXARGV_USE_MBC 定義時のみMBCの2バイト目'\'対処.
  *  -   _WIN32 が定義されていれば win用、でなければ unix系を想定.
  *
  *  - Public Domain Software
  */
 
-#ifndef EXARGV_INCLUDED
-#define EXARGV_INCLUDED
+#ifndef EXARGV_INCLUDED__
+#define EXARGV_INCLUDED__
 
 // ---------------------------------------------------------------------------
 // 設定.
 
+//[] 定義すると、WinMain 用に ExArgv_forWinMain を生成.(ExArgv_conv は無)
+//#define EXARGV_FOR_WINMAIN
+
+//[] 定義され かつ UNICODE 未定義なら MBCS として2バイト目\文字対処を行う
+//#define EXARGV_USE_MBC
+
+//[] 定義すると、wchar_t 用として生成. UNICODE 定義時は自動で定義される.
+//#define EXARGV_USE_WCHAR
+
+
 //[] ワイルドカード指定を 1=有効  0=無効  未定義=デフォルト設定(1)
 //#define EXARGV_USE_WC         1
-
 
 //[] ワイルドカードon時に、ワイルドカード文字 ** があれば再帰検索に
 //      1=する 0=しない 未定義=デフォルト設定(1)
@@ -48,8 +62,8 @@
 
 
 //[] @レスポンスファイルを
-//      1=有効   0=無効  未定義=デフォルト設定(1)
-//#define EXARGV_USE_RESFILE    1
+//      1=有効   0=無効  未定義=デフォルト設定(0)
+//#define EXARGV_USE_RESFILE    0
 
 
 //[] 簡易コンフィグ(レスポンス)ファイル入力を
@@ -73,7 +87,6 @@
 //   ※bcc,dmc,watcomは元からフルパスなので何もしません. のでvc,gcc向.
 //#define EXARGV_USE_FULLPATH_ARGV0
 
-
 //[] 定義すれば、filePath中の \ を / に置換.
 //#define EXARGV_TOSLASH
 
@@ -84,7 +97,6 @@
 
 //[] 定義すれば、/ もオプション開始文字とみなす.
 //#define EXARGV_USE_SLASH_OPT
-
 
 //[] 実験. VCのみ. 定義すると、setargvの代用品としてコンパイル(ExArgv_getは無)
 //   現状 setargv.obj のリンクも必要.
@@ -100,14 +112,14 @@ extern "C" {
 
 #if defined EXARGV_USE_SETARGV  // VCの暗黙処理の置き換え用.
 
-#elif defined _WINDOWS      // win-gui 環境用.
- #if defined UNICODE
+#elif defined EXARGV_FOR_WINMAIN // win-gui用. _WINDOWS はCONSOLE用でも定義されることもあり廃止.
+ #if defined UNICODE || defined EXARGV_USE_WCHAR
   void ExArgv_forWinMain(const wchar_t* pCmdLine, int* pArgc, wchar_t*** pppArgv);
  #else
   void ExArgv_forWinMain(const char*    pCmdLine, int* pArgc, char***    pppArgv);
  #endif
 #else                       // コマンドラインツール用. mainの初っ端くらいに呼ぶのを想定.
- #if defined UNICODE
+ #if defined UNICODE || defined EXARGV_USE_WCHAR
   void ExArgv_conv(int* pArgc, wchar_t*** pppArgv);
  #else
   void ExArgv_conv(int* pArgc, char*** pppArgv);
@@ -119,4 +131,4 @@ extern "C" {
 }
 #endif
 // ---------------------------------------------------------------------------
-#endif  // EXARGV_INCLUDED
+#endif  // EXARGV_INCLUDED__
