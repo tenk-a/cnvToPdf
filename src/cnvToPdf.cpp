@@ -62,12 +62,12 @@ public:
     }
 
 
-    Er_t main(int argc, char *argv[]) {
+    int main(int argc, char *argv[]) {
         if (argc < 2)
             return usage();
 
-    	std::vector<std::string>	jpgfiles;
-        JpgFileToPdf    			conv;
+    	vector<string>	jpgfiles;
+        JpgFileToPdf    conv;
 
         jpgfiles.reserve(1000);
         for (int i = 1; i < argc; ++i) {
@@ -85,7 +85,7 @@ public:
             return Ok;
 
         if (firstNameToTitle_ && conv_opts_.title.empty()) {
-            std::string dir = pathToStr(fs::path(jpgfiles[0]).parent_path());
+            string dir = pathToStr(fs::path(jpgfiles[0]).parent_path());
             if (!dir.empty()) {
                 titleAuthor_ = dir;
                 getTitleAuthor(titleAuthor_, conv_opts_.title, conv_opts_.author);
@@ -106,19 +106,19 @@ public:
             outname_ = dstdir_ / outname_;
         }
 
-        std::sort(jpgfiles.begin(), jpgfiles.end(), FnameCmp(digitCmp_));
+        sort(jpgfiles.begin(), jpgfiles.end(), FnameCmp(digitCmp_));
         if (vflag_) {
         	for (int i = 0; i < jpgfiles.size(); ++i)
         		printf("%s\n", jpgfiles[i].c_str());
         }
 
-        return Er_t(conv.run(jpgfiles, outname_.string().c_str(), conv_opts_) == false);
+        return conv.run(jpgfiles, outname_.string().c_str(), conv_opts_) == false;
     }
 
 
     struct FnameCmp {
         FnameCmp(bool digit) : digit_(digit) { }
-        bool operator()(std::string const& l, std::string const& r) const {
+        bool operator()(string const& l, string const& r) const {
             if (digit_)
                 return fnameDigCmp(l, r) < 0;
             else
@@ -198,7 +198,7 @@ private:
 	}
 
 	static bool checkOpt(char*& arg, string_view opt) {
-		if (strStartsWith(std::string_view(arg), opt)) {
+		if (strStartsWith(string_view(arg), opt)) {
 			arg += opt.size();
 			if (*arg == '=')
 				++arg;
@@ -207,7 +207,7 @@ private:
 		return false;
 	}
 
-    static void getTitleAuthor(std::string& str, std::string& rTitle, std::string& rAuthor) {
+    static void getTitleAuthor(string& str, string& rTitle, string& rAuthor) {
         char const* s = str.data();
         if (*s == '[') {
             char const* t = strchr(s+1, ']');
@@ -250,14 +250,14 @@ int main(int argc, char *argv[]) {
 }
 #else
 int wmain(int argc, wchar_t *argv[]) {
-	namespace fs = std::filesystem;
+	namespace fs = filesystem;
 	auto savCP = GetConsoleOutputCP();
 	SetConsoleOutputCP(65001);
     ExArgv_conv(&argc, &argv);
-    std::vector<char*>       argv2(argc);
-    std::vector<std::string> args;
+    vector<char*>       argv2(argc);
+    vector<string> args;
     args.reserve(argc);
-	for (std::size_t i = 0; i < argc; ++i) {
+	for (size_t i = 0; i < argc; ++i) {
 		args.emplace_back(pathToStr(fs::path(argv[i])));
 		argv2[i] = const_cast<char*>(args.back().c_str());
 	}
